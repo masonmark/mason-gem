@@ -1,0 +1,5 @@
+gem "mason", github: "masonmark/mason-gem"
+
+# gem "mason", path: "../" 
+    # path is to parent dir, not gem itself
+  

@@ -15,7 +15,7 @@
 	<key>defaultUUID</key>
 	<string>4980bce0-8942-4a26-bcdd-984f3a82bf2b</string>
 	<key>expectedPageCount</key>
-	<integer>4</integer>
+	<integer>5</integer>
 	<key>lastPDFExportPagePresetName</key>
 	<string>iso-a4</string>
 	<key>lastWebExportOutputURLData</key>
@@ -57,15 +57,15 @@
 					<key>rulerVisible</key>
 					<true/>
 					<key>selectedRange</key>
-					<string>{267, 34}</string>
+					<string>{0, 0}</string>
 					<key>visibleGlyphs</key>
-					<string>{0, 406}</string>
+					<string>{0, 479}</string>
 					<key>zoomScale</key>
 					<real>1</real>
 				</dict>
 			</array>
 			<key>windowFrame</key>
-			<string>{{55, 0}, {1865, 1177}}</string>
+			<string>{{678, -0}, {1242, 1009}}</string>
 		</dict>
 	</array>
 	<key>skIndexVersion</key>

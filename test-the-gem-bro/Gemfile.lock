@@ -1,0 +1,17 @@
+GIT
+  remote: git://github.com/masonmark/mason-gem.git
+  revision: 1575c6fdbaa30bf7c26570e3ccd8f15412082adc
+  specs:
+    mason (0.0.1)
+
+GEM
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  mason!
+
+BUNDLED WITH
+   1.11.2
