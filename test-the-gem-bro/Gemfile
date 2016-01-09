@@ -1,5 +1,9 @@
-gem "mason", github: "masonmark/mason-gem"
+# gem "mason", github: "masonmark/mason-gem"
+  # When not actively working on the gem, referencing it via github is good.
+  # However, when working on the gem itself, it's more covenient to reference it
+  # via local path, because then there's no need to push the gem code to github
+  # and then have to 'bundle install' in the project using it.
 
-# gem "mason", path: "../" 
-    # path is to parent dir, not gem itself
+gem "mason", path: "../" 
+  # path is to parent dir, not gem itself
   

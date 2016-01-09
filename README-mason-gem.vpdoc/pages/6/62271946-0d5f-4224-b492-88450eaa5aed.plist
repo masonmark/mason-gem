@@ -19,19 +19,19 @@
 	<key>categories</key>
 	<array/>
 	<key>createdDate</key>
-	<date>2016-01-08T23:15:05Z</date>
+	<date>2016-01-09T06:55:02Z</date>
 	<key>dataHash</key>
-	<string>db7c89356586fb60d59316664619107a39932e84</string>
+	<string>e20b174f547d0ac41895b270c8e5058a1f0603bc</string>
 	<key>displayName</key>
-	<string>Index</string>
+	<string>figure out how to conveniently work on the gem and a project using it at the same time</string>
 	<key>encrypted</key>
 	<string>No</string>
 	<key>key</key>
-	<string>index</string>
+	<string>figure out how to conveniently work on the gem and a project using it at the same time</string>
 	<key>metaValues</key>
 	<dict/>
 	<key>modifiedDate</key>
-	<date>2016-01-09T06:55:02Z</date>
+	<date>2016-01-09T07:12:53Z</date>
 	<key>shouldHighlightLinks</key>
 	<string>Yes</string>
 	<key>skipOnExport</key>
@@ -39,7 +39,7 @@
 	<key>uti</key>
 	<string>com.apple.rtfd</string>
 	<key>uuid</key>
-	<string>4980bce0-8942-4a26-bcdd-984f3a82bf2b</string>
+	<string>62271946-0d5f-4224-b492-88450eaa5aed</string>
 	<key>version</key>
 	<integer>1</integer>
 </dict>

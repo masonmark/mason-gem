@@ -1,7 +1,7 @@
 class Mason
 
   def boogie
-    puts "w00t w00t"
+    puts "Sorry, the boogie feature has been removed in this new version."
   end
   
 end
