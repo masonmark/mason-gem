@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>allowPluginLinks</key>
+	<true/>
+	<key>bdToBookmarkAliasUpgrade</key>
+	<true/>
+	<key>createSpotlightIndex</key>
+	<true/>
+	<key>dbVersion</key>
+	<string>7</string>
+	<key>defaultPage</key>
+	<string>Index</string>
+	<key>defaultUUID</key>
+	<string>4980bce0-8942-4a26-bcdd-984f3a82bf2b</string>
+	<key>expectedPageCount</key>
+	<integer>4</integer>
+	<key>lastPDFExportPagePresetName</key>
+	<string>iso-a4</string>
+	<key>lastWebExportOutputURLData</key>
+	<data>
+	Ym9va8gDAAAAAAQQMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAIA
+	AAUAAAABAQAAVXNlcnMAAAAFAAAAAQEAAG1hc29uAAAABAAAAAEBAABDb2RlCQAAAAEB
+	AABtYXNvbi1nZW0AAAAQAAAAAQEAAFJFQURNRS1tYXNvbi1nZW0UAAAAAQYAAAQAAAAU
+	AAAAJAAAADAAAABEAAAACAAAAAQDAAChkwIAAAAAAAgAAAAEAwAAdicGAAAAAAAIAAAA
+	BAMAALu5eAAAAAAACAAAAAQDAABa4zwCAAAAAAgAAAAEAwAAGNc9AgAAAAAUAAAAAQYA
+	AHgAAACIAAAAmAAAAKgAAAC4AAAACAAAAAAEAABBvECjbgAAABgAAAABAgAAAgAAAAAA
+	AAAPAAAAAAAAAAAAAAAAAAAAAAAAAAEFAAAEAAAAAwMAAAEAAAAIAAAABAMAAAMAAAAA
+	AAAABAAAAAMDAAD1AQAACAAAAAEJAABmaWxlOi8vLwMAAAABAQAAMVRCAAgAAAAEAwAA
+	AAD+rOgAAAAIAAAAAAQAAEG6AIfIAAAAJAAAAAEBAAA1MEJDNTAyNy1COUIwLTM2QUMt
+	QTYzQy0zQjlDNjY2Njk1QkIYAAAAAQIAAIEAAAABAAAA7xMAAAEAAAAAAAAAAAAAAAEA
+	AAABAQAALwAAAL0AAAABAgAANDljN2MxNTdkODYyMGM2NmRlODkxZTQ0YjcxMTgyNThk
+	MzYwZDFhYzswMDAwMDAwMDswMDAwMDAwMDswMDAwMDAwMDAwMDAwMDIwO2NvbS5hcHBs
+	ZS5hcHAtc2FuZGJveC5yZWFkLXdyaXRlOzAwMDAwMDAxOzAxMDAwMDA0OzAwMDAwMDAw
+	MDIzZGQ3MTg7L3VzZXJzL21hc29uL2NvZGUvbWFzb24tZ2VtL3JlYWRtZS1tYXNvbi1n
+	ZW0AAAAA8AAAAP7///8BAAAAAAAAABMAAAAEEAAAXAAAAAAAAAAFEAAAyAAAAAAAAAAQ
+	EAAA9AAAAAAAAABAEAAA5AAAAAAAAABUEAAAHAEAAAAAAABVEAAAHAEAAAAAAABWEAAA
+	FAEAAAAAAAACIAAAzAEAAAAAAAAFIAAARAEAAAAAAAAQIAAAVAEAAAAAAAARIAAAgAEA
+	AAAAAAASIAAAYAEAAAAAAAATIAAAcAEAAAAAAAAgIAAArAEAAAAAAAAwIAAAFAEAAAAA
+	AAABwAAAKAEAAAAAAAARwAAAFAAAAAAAAAASwAAAOAEAAAAAAACA8AAA2AEAAAAAAAA=
+	</data>
+	<key>localWebAccess</key>
+	<false/>
+	<key>openWindows</key>
+	<array>
+		<dict>
+			<key>displayUUID</key>
+			<string>4980bce0-8942-4a26-bcdd-984f3a82bf2b</string>
+			<key>drawerOpen</key>
+			<false/>
+			<key>openUUIDProperties</key>
+			<array>
+				<dict>
+					<key>itemUUID</key>
+					<string>4980bce0-8942-4a26-bcdd-984f3a82bf2b</string>
+					<key>rulerVisible</key>
+					<true/>
+					<key>selectedRange</key>
+					<string>{267, 34}</string>
+					<key>visibleGlyphs</key>
+					<string>{0, 406}</string>
+					<key>zoomScale</key>
+					<real>1</real>
+				</dict>
+			</array>
+			<key>windowFrame</key>
+			<string>{{55, 0}, {1865, 1177}}</string>
+		</dict>
+	</array>
+	<key>skIndexVersion</key>
+	<integer>7</integer>
+	<key>updatedFMPageToRealUTIs</key>
+	<true/>
+	<key>updatedSpecialPages3</key>
+	<true/>
+	<key>uuid</key>
+	<string>434fefae-d6d6-41db-a230-7cc77e7437d8</string>
+</dict>
+</plist>

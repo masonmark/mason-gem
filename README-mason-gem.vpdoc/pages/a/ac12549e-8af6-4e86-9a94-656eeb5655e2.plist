@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>aliases</key>
+	<array/>
+	<key>attributes</key>
+	<dict>
+		<key>documentBackgroundColor</key>
+		<data>
+		BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWE
+		AWMDhAJmZgEBhg==
+		</data>
+		<key>lastEditingComputerName</key>
+		<string>MacBook Pro No. 5</string>
+		<key>lastEditingUserName</key>
+		<string>mason</string>
+	</dict>
+	<key>categories</key>
+	<array/>
+	<key>createdDate</key>
+	<date>2016-01-08T23:30:53Z</date>
+	<key>dataHash</key>
+	<string>075766f1827239204b4c3d0b7eccbb7586175abf</string>
+	<key>displayName</key>
+	<string>create My Little Pony® Baby's First Gem™</string>
+	<key>encrypted</key>
+	<string>No</string>
+	<key>key</key>
+	<string>create my little pony® baby's first gem™</string>
+	<key>metaValues</key>
+	<dict/>
+	<key>modifiedDate</key>
+	<date>2016-01-09T02:03:41Z</date>
+	<key>shouldHighlightLinks</key>
+	<string>Yes</string>
+	<key>skipOnExport</key>
+	<string>No</string>
+	<key>uti</key>
+	<string>com.apple.rtfd</string>
+	<key>uuid</key>
+	<string>ac12549e-8af6-4e86-9a94-656eeb5655e2</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>

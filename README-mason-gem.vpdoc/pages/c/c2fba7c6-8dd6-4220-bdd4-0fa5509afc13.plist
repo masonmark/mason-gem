@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>aliases</key>
+	<array/>
+	<key>attributes</key>
+	<dict/>
+	<key>categories</key>
+	<array/>
+	<key>createdDate</key>
+	<date>2016-01-08T23:28:52Z</date>
+	<key>displayName</key>
+	<string>RubyGems guide to how to make your own gem</string>
+	<key>encrypted</key>
+	<string>No</string>
+	<key>key</key>
+	<string>rubygems guide to how to make your own gem</string>
+	<key>metaValues</key>
+	<dict/>
+	<key>modifiedDate</key>
+	<date>2016-01-08T23:28:52Z</date>
+	<key>shouldHighlightLinks</key>
+	<string>Yes</string>
+	<key>skipOnExport</key>
+	<string>No</string>
+	<key>uti</key>
+	<string>com.fm.url</string>
+	<key>uuid</key>
+	<string>c2fba7c6-8dd6-4220-bdd4-0fa5509afc13</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>
