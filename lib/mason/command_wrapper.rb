@@ -53,7 +53,23 @@ module Mason
       # this isn't what you need. Also, there's no mechanism yet to have a timeout or
       # interrupt a task that is e.g. stuck waiting for input or otherwise infinite.
 
-      stdin, stdout, stderr, wait_thr = Open3.popen3(cmd_str)
+
+        stdin, stdout, stderr, wait_thr = Open3.popen3(cmd_str + ";")
+          # why the semicolon? See http://stackoverflow.com/questions/26040249/why-does-open3-popen3-return-wrong-error-when-executable-is-missing
+          # Short answer: forces cmd_str to go to shell, not kernel, preventing ENOENT exception in common case and giving us error exit_status instead.
+          #
+          # Otherwise:
+          #
+          # begin
+          #   stdin, stdout, stderr, wait_thr = Open3.popen3(cmd_str + ";")
+          # rescue Errno::ENOENT => kernel_err
+          #   # puts "ENOENT: no such file or directory: #{kernel_err.errno}"
+          #
+          #   raise kernel_err
+          #     # Re-raise this for now, while I decide what to do.
+          #     # Maybe raise InvalidCommandError? Or have mechanism to suppress?
+          # end
+
       # pid = wait_thr[:pid]  # pid of the started process.
       # puts "Execute command: " + cmd
       # puts "pid: " + pid.to_s
@@ -77,6 +93,7 @@ module Mason
     def self.run_command(cmd_str)
       cw = self.new cmd_str
       cw.run
+      return cw
     end
     
     

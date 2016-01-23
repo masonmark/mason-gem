@@ -94,6 +94,20 @@ class CommandWrapperTests < MiniTest::Unit::TestCase
     @instance.raise_on_bad_exit = true
     assert_raises(Mason::CommandWrapper::UnexpectedExitStatusError) {@instance.run}
   end
+
+  def test_run_command_class_method
+    # had bug where class method forgot to return the instance and just returned nil
+
+    x = @class.run_command 'ls -la /'
+    assert_kind_of Mason::CommandWrapper, x
+    assert x.exit_status == 0
+    assert x.stdout.include? "drwx"
+
+    x = @class.run_command 'urpNOCKwhut -sdfdsf'
+    assert x.exit_status != 0
+    assert x.stdout == ""
+    assert x.stderr != ""
+
   end
   
 end
