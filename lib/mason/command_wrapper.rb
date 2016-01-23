@@ -19,7 +19,7 @@ module Mason
       @command              = command
       @working_directory    = Dir.pwd
       @expected_exit_status = 0
-      @raise_on_bad_exit    = true
+      @raise_on_bad_exit    = false # this defaulted true for years, but I was wrong
       @start_time           = nil
       @end_time             = nil
       @stdout               = nil

@@ -87,11 +87,13 @@ class CommandWrapperTests < MiniTest::Unit::TestCase
     assert_equal 0, @instance.exit_status
     
     @instance = @class.new('ls -la /dshjkflashdfklahfhsadjkfhlasdhfhasdlhfu')
-    assert_raises(Mason::CommandWrapper::UnexpectedExitStatusError) {@instance.run}
-    
-    @instance.raise_on_bad_exit = false
+
     @instance.run
     assert @instance.exit_status != 0
+
+    @instance.raise_on_bad_exit = true
+    assert_raises(Mason::CommandWrapper::UnexpectedExitStatusError) {@instance.run}
+  end
   end
   
 end
