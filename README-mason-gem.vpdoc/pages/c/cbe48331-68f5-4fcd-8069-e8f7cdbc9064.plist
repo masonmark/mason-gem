@@ -19,19 +19,19 @@
 	<key>categories</key>
 	<array/>
 	<key>createdDate</key>
-	<date>2016-01-08T23:15:05Z</date>
+	<date>2016-01-23T04:22:31Z</date>
 	<key>dataHash</key>
-	<string>68a26d850ee75bc2c7ae96ad6c7d0cc81d5610d2</string>
+	<string>bd8b36d90076966df475433423c147967a5d6e87</string>
 	<key>displayName</key>
-	<string>Index</string>
+	<string>add CommandWrapper utility class for running external commands</string>
 	<key>encrypted</key>
 	<string>No</string>
 	<key>key</key>
-	<string>index</string>
+	<string>add commandwrapper utility class for running external commands</string>
 	<key>metaValues</key>
 	<dict/>
 	<key>modifiedDate</key>
-	<date>2016-01-23T04:22:31Z</date>
+	<date>2016-01-23T09:34:50Z</date>
 	<key>shouldHighlightLinks</key>
 	<string>Yes</string>
 	<key>skipOnExport</key>
@@ -39,7 +39,7 @@
 	<key>uti</key>
 	<string>com.apple.rtfd</string>
 	<key>uuid</key>
-	<string>4980bce0-8942-4a26-bcdd-984f3a82bf2b</string>
+	<string>cbe48331-68f5-4fcd-8069-e8f7cdbc9064</string>
 	<key>version</key>
 	<integer>1</integer>
 </dict>
