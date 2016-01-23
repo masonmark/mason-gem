@@ -20,12 +20,12 @@ module Mason
       @working_directory    = Dir.pwd
       @expected_exit_status = 0
       @raise_on_bad_exit    = true
-      @exit_status          = nil
-      @stdout_output        = nil
-      @stderr_output        = nil
       @start_time           = nil
       @end_time             = nil
-      
+      @stdout               = nil
+      @stderr               = nil
+      @exit_status          = nil
+
     end
     
     def run()
