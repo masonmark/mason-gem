@@ -19,19 +19,19 @@
 	<key>categories</key>
 	<array/>
 	<key>createdDate</key>
-	<date>2016-01-08T23:15:05Z</date>
+	<date>2016-01-23T02:15:56Z</date>
 	<key>dataHash</key>
-	<string>a995ea26ea8292d7839ef973c4f8c2d85f7efb9d</string>
+	<string>928861826f0c773079c4c99e43da37c45f3a412e</string>
 	<key>displayName</key>
-	<string>Index</string>
+	<string>add a module to namespace stuff</string>
 	<key>encrypted</key>
 	<string>No</string>
 	<key>key</key>
-	<string>index</string>
+	<string>add a module to namespace stuff</string>
 	<key>metaValues</key>
 	<dict/>
 	<key>modifiedDate</key>
-	<date>2016-01-23T04:04:32Z</date>
+	<date>2016-01-23T03:58:54Z</date>
 	<key>shouldHighlightLinks</key>
 	<string>Yes</string>
 	<key>skipOnExport</key>
@@ -39,7 +39,7 @@
 	<key>uti</key>
 	<string>com.apple.rtfd</string>
 	<key>uuid</key>
-	<string>4980bce0-8942-4a26-bcdd-984f3a82bf2b</string>
+	<string>848c8c73-8324-465b-9e13-e0c5e9747f52</string>
 	<key>version</key>
 	<integer>1</integer>
 </dict>

@@ -5,41 +5,29 @@
 	<key>aliases</key>
 	<array/>
 	<key>attributes</key>
-	<dict>
-		<key>documentBackgroundColor</key>
-		<data>
-		BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWE
-		AWMDhAJmZgEBhg==
-		</data>
-		<key>lastEditingComputerName</key>
-		<string>Mac Pro No. 5</string>
-		<key>lastEditingUserName</key>
-		<string>mason</string>
-	</dict>
+	<dict/>
 	<key>categories</key>
 	<array/>
 	<key>createdDate</key>
-	<date>2016-01-08T23:15:05Z</date>
-	<key>dataHash</key>
-	<string>a995ea26ea8292d7839ef973c4f8c2d85f7efb9d</string>
+	<date>2016-01-23T03:13:26Z</date>
 	<key>displayName</key>
-	<string>Index</string>
+	<string>The Fine Documentation</string>
 	<key>encrypted</key>
 	<string>No</string>
 	<key>key</key>
-	<string>index</string>
+	<string>the fine documentation</string>
 	<key>metaValues</key>
 	<dict/>
 	<key>modifiedDate</key>
-	<date>2016-01-23T04:04:32Z</date>
+	<date>2016-01-23T03:13:26Z</date>
 	<key>shouldHighlightLinks</key>
 	<string>Yes</string>
 	<key>skipOnExport</key>
 	<string>No</string>
 	<key>uti</key>
-	<string>com.apple.rtfd</string>
+	<string>com.fm.url</string>
 	<key>uuid</key>
-	<string>4980bce0-8942-4a26-bcdd-984f3a82bf2b</string>
+	<string>e997ef8c-7908-471d-b31e-8c832e0dc047</string>
 	<key>version</key>
 	<integer>1</integer>
 </dict>

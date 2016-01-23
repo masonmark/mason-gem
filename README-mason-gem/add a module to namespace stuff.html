@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title>add a module to namespace stuff</title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="1404.34">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Helvetica Neue'}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Helvetica Neue'; min-height: 16.0px}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px Menlo; background-color: #d2f1ff}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px Menlo; background-color: #d2f1ff; min-height: 13.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px Menlo; color: #a1a111; background-color: #d2f1ff}
+    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px Menlo; color: #4a2bda; background-color: #d2f1ff}
+    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px Menlo; color: #bcbcbc; background-color: #d2f1ff}
+    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px Menlo; color: #1daf14; background-color: #d2f1ff}
+    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px Menlo; color: #1baeba; background-color: #d2f1ff}
+    p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px Menlo; color: #b92e18; background-color: #d2f1ff}
+    p.p11 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 12.0px Helvetica}
+    span.s1 {text-decoration: underline}
+    span.s2 {font-variant-ligatures: no-common-ligatures}
+    span.s3 {font: 11.0px 'Hiragino Sans'; font-variant-ligatures: no-common-ligatures; color: #ff2c2c}
+    span.s4 {font-variant-ligatures: no-common-ligatures; color: #ff2c2c}
+    span.s5 {font-variant-ligatures: no-common-ligatures; color: #1baeba}
+    span.s6 {font-variant-ligatures: no-common-ligatures; color: #000000}
+    span.s7 {text-decoration: underline ; font-variant-ligatures: no-common-ligatures; color: #1baeba}
+    span.s8 {font-variant-ligatures: no-common-ligatures; color: #4a2bda}
+    span.s9 {text-decoration: underline ; font-variant-ligatures: no-common-ligatures; color: #1daf14}
+    span.s10 {text-decoration: underline ; font-variant-ligatures: no-common-ligatures}
+    span.s11 {font-variant-ligatures: no-common-ligatures; color: #1daf14}
+    span.s12 {font-variant-ligatures: no-common-ligatures; color: #a1a111}
+    span.s13 {font-variant-ligatures: no-common-ligatures; color: #b92e18}
+  </style>
+</head>
+<body>
+<p class="p1"><b>add a module to namespace stuff</b></p>
+<p class="p1">2016-01-23</p>
+<p class="p2"><br></p>
+<p class="p1">OK, in our last episode, the Mason gem just had a single file: <b>lib/mason.rb</b></p>
+<p class="p2"><br></p>
+<p class="p1">Now I want to add a bunch of useful classses and things to the gem. But I want to keep those all under the "Mason" namespace. The main (only?) way to do that in ruby is to put things in a module (<a href="https://rubymonk.com/learning/books/1-ruby-primer/chapters/35-modules/lessons/80-modules-as-namespaces"><span class="s1">the monk can tell you more about this</span></a>). So I want to make a "Mason" module, into which I will (someday) put a bunch of awesomeness.</p>
+<p class="p2"><br></p>
+<p class="p1">Remember, that is the root file: "The convention is to have one Ruby file with the same name as your gem, since that gets loaded when require 'gemname' is run. That one file is in charge of setting up your gem’s code and API."</p>
+<p class="p2"><br></p>
+<p class="p1">As explained in <a href="http://guides.rubygems.org/make-your-own-gem/"><span class="s1">The Fine Documentation</span></a>, when you add a bunch of files to your gem, that root file is responsible for <b>require</b>ing them, and also they should (by convention) live in <b>lib/<i>gemname</i></b>. So in this case, when we add a new ruby file for the CommandWrapper class, the tree ends up like this:</p>
+<p class="p2"><br></p>
+<p class="p3"><span class="s2">[mason@tokyo mason-gem (master)]$ tree</span></p>
+<p class="p3"><span class="s2">.</span></p>
+<p class="p3"><span class="s2">├── README.md</span></p>
+<p class="p3"><span class="s2">├── lib</span></p>
+<p class="p3"><span class="s2">│&nbsp;&nbsp; ├── mason <span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span></span><span class="s3">← </span><span class="s4"><b>new!</b></span></p>
+<p class="p3"><span class="s2">│&nbsp;&nbsp; │&nbsp;&nbsp; └── command_wrapper.rb<span class="Apple-converted-space">&nbsp; &nbsp; </span></span><span class="s3">← </span><span class="s4"><b>new!</b></span></p>
+<p class="p3"><span class="s2">│&nbsp;&nbsp; └── mason.rb</span></p>
+<p class="p3"><span class="s2">├── mason.gemspec</span></p>
+<p class="p2"><br></p>
+<p class="p1">And then the root file, <b>mason.rb</b>, requires it like this:</p>
+<p class="p2"><br></p>
+<p class="p3"><span class="s2">[mason@tokyo mason-gem (master)]$ pygmentize lib/mason.rb<span class="Apple-converted-space">&nbsp;</span></span></p>
+<p class="p4"><span class="s2"></span><br></p>
+<p class="p5"><span class="s5">require</span><span class="s6"> </span><span class="s2">'mason/command_wrapper'</span></p>
+<p class="p4"><span class="s2"></span><br></p>
+<p class="p6"><span class="s2">module</span><span class="s6"> </span><span class="s7">Mason</span></p>
+<p class="p4"><span class="s2"></span><br></p>
+<p class="p7"><span class="s6"><span class="Apple-converted-space">&nbsp; </span></span><span class="s8">class</span><span class="s6"> </span><span class="s9">Mason</span><span class="s6"> </span><span class="s2"># we also moved the old Mason class into the new Mason module.</span></p>
+<p class="p4"><span class="s2"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;</span></span></p>
+<p class="p8"><span class="s6"><span class="Apple-converted-space">&nbsp; &nbsp; </span></span><span class="s8">def</span><span class="s6"> </span><span class="s2">boogie</span></p>
+<p class="p5"><span class="s6"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; </span></span><span class="s5">puts</span><span class="s6"> </span><span class="s2">"Sorry, the boogie feature has been removed in this new version."</span></p>
+<p class="p3"><span class="s2"><span class="Apple-converted-space">&nbsp; &nbsp; </span></span><span class="s8">end</span></p>
+<p class="p4"><span class="s2"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;</span></span></p>
+<p class="p6"><span class="s6"><span class="Apple-converted-space">&nbsp; </span></span><span class="s2">end</span></p>
+<p class="p4"><span class="s2"><span class="Apple-converted-space">&nbsp;&nbsp;</span></span></p>
+<p class="p6"><span class="s2">end</span></p>
+<p class="p4"><span class="s2"></span><br></p>
+<p class="p3"><span class="s2">[mason@tokyo mason-gem (master)]$<span class="Apple-converted-space">&nbsp;</span></span></p>
+<p class="p2"><br></p>
+<p class="p1">For now there is no real code in <b>command_wrapper.rb</b>, as I just want to confirm the gem structure is set up all right:</p>
+<p class="p2"><br></p>
+<p class="p3"><span class="s2">[mason@tokyo mason-gem (master)]$ pygmentize lib/mason/command_wrapper.rb<span class="Apple-converted-space">&nbsp;</span></span></p>
+<p class="p4"><span class="s2"></span><br></p>
+<p class="p6"><span class="s2">module</span><span class="s6"> </span><span class="s7">Mason</span></p>
+<p class="p4"><span class="s2"><span class="Apple-converted-space">&nbsp;&nbsp;</span></span></p>
+<p class="p8"><span class="s6"><span class="Apple-converted-space">&nbsp; </span></span><span class="s8">class</span><span class="s6"> </span><span class="s10">CommandWrapper</span></p>
+<p class="p4"><span class="s2"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;</span></span></p>
+<p class="p3"><span class="s2"><span class="Apple-converted-space">&nbsp; &nbsp; </span></span><span class="s8">def</span><span class="s2"> </span><span class="s11">run</span></p>
+<p class="p3"><span class="s2"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; </span>nope = </span><span class="s12">"nope nope!"</span></p>
+<p class="p3"><span class="s2"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; </span></span><span class="s5">puts</span><span class="s2"> nope</span></p>
+<p class="p3"><span class="s2"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; </span></span><span class="s8">return</span><span class="s2"> nope</span></p>
+<p class="p3"><span class="s2"><span class="Apple-converted-space">&nbsp; &nbsp; </span></span><span class="s8">end</span></p>
+<p class="p4"><span class="s2"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;</span></span></p>
+<p class="p6"><span class="s6"><span class="Apple-converted-space">&nbsp; </span></span><span class="s2">end</span></p>
+<p class="p4"><span class="s2"><span class="Apple-converted-space">&nbsp;&nbsp;</span></span></p>
+<p class="p6"><span class="s2">end</span></p>
+<p class="p4"><span class="s2"></span><br></p>
+<p class="p3"><span class="s2">[mason@tokyo mason-gem (master)]$<span class="Apple-converted-space">&nbsp;</span></span></p>
+<p class="p2"><br></p>
+<p class="p1">OK, so is it?</p>
+<p class="p2"><br></p>
+<p class="p1">Update the test script to reflect the changes to the gem:</p>
+<p class="p2"><br></p>
+<p class="p3"><span class="s2">[mason@tokyo test-the-gem-bro (master)]$ pygmentize test.rb<span class="Apple-converted-space">&nbsp;</span></span></p>
+<p class="p4"><span class="s2"></span><br></p>
+<p class="p7"><span class="s2">#! /usr/bin/env ruby</span></p>
+<p class="p4"><span class="s2"></span><br></p>
+<p class="p9"><span class="s2">require</span><span class="s6"> </span><span class="s12">'mason'</span></p>
+<p class="p4"><span class="s2"></span><br></p>
+<p class="p3"><span class="s2">foo = </span><span class="s13">Mason</span><span class="s2">::</span><span class="s13">Mason</span><span class="s2">.new</span></p>
+<p class="p4"><span class="s2"></span><br></p>
+<p class="p5"><span class="s5">puts</span><span class="s6"> </span><span class="s2">"Here's a Mason instance: #{</span><span class="s6">foo</span><span class="s2">}"</span></p>
+<p class="p4"><span class="s2"></span><br></p>
+<p class="p5"><span class="s5">puts</span><span class="s6"> </span><span class="s2">"Will it boogie?"</span></p>
+<p class="p4"><span class="s2"></span><br></p>
+<p class="p3"><span class="s2">foo.boogie</span></p>
+<p class="p4"><span class="s2"></span><br></p>
+<p class="p10"><span class="s6">bar = </span><span class="s2">Mason</span><span class="s6">::</span><span class="s2">CommandWrapper</span><span class="s6">.new</span></p>
+<p class="p3"><span class="s2">bar.run</span></p>
+<p class="p4"><span class="s2"></span><br></p>
+<p class="p3"><span class="s2">[mason@tokyo test-the-gem-bro (master)]$<span class="Apple-converted-space">&nbsp;</span></span></p>
+<p class="p2"><br></p>
+<p class="p1">And, because Bundler has bundled with the old version of the gem, we need to do a <b>bundle update</b>:</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p3"><span class="s2">[mason@tokyo mason-gem (master)]$ cd test-the-gem-bro</span></p>
+<p class="p3"><span class="s2">[mason@tokyo test-the-gem-bro (master)]$<span class="Apple-converted-space">&nbsp;</span></span></p>
+<p class="p3"><span class="s2">[mason@tokyo test-the-gem-bro (master)]$<span class="Apple-converted-space">&nbsp;</span></span></p>
+<p class="p3"><span class="s2">[mason@tokyo test-the-gem-bro (master)]$ bundle update</span></p>
+<p class="p3"><span class="s2">Resolving dependencies...</span></p>
+<p class="p3"><span class="s2">Using mason 0.0.2 (was 0.0.1) from source at ../</span></p>
+<p class="p3"><span class="s2">Using bundler 1.7.7</span></p>
+<p class="p8"><span class="s2">Your bundle is updated!</span></p>
+<p class="p3"><span class="s2">[mason@tokyo test-the-gem-bro (master)]$<span class="Apple-converted-space">&nbsp;</span></span></p>
+<p class="p2"><br></p>
+<p class="p1">Et voila!</p>
+<p class="p2"><br></p>
+<p class="p3"><span class="s2">[mason@tokyo test-the-gem-bro (master)]$ bundle exec ./test.rb<span class="Apple-converted-space">&nbsp;</span></span></p>
+<p class="p3"><span class="s2">Here's a Mason instance: #&lt;Mason::Mason:0x007ff504b0b188&gt;</span></p>
+<p class="p3"><span class="s2">Will it boogie?</span></p>
+<p class="p3"><span class="s2">Sorry, the boogie feature has been removed in this new version.</span></p>
+<p class="p3"><span class="s2">nope nope!</span></p>
+<p class="p3"><span class="s2">[mason@tokyo test-the-gem-bro (master)]$<span class="Apple-converted-space">&nbsp;</span></span></p>
+<p class="p2"><br></p>
+<p class="p1">In this case, "nope nope" means "yep it worked".</p>
+<p class="p2"><br></p>
+<p class="p11"><img src="add%20a%20module%20to%20namespace%20stuff.thumb_IMG_1173_1024.jpg" width="1024" height="768" alt="thumb_IMG_1173_1024.jpg"></p>
+</body>
+</html>
