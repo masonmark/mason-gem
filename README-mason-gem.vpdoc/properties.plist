@@ -47,26 +47,26 @@
 	<array>
 		<dict>
 			<key>displayUUID</key>
-			<string>dda1e1b2-0da5-4ded-8571-9248da8ba8be</string>
+			<string>4980bce0-8942-4a26-bcdd-984f3a82bf2b</string>
 			<key>drawerOpen</key>
 			<false/>
 			<key>openUUIDProperties</key>
 			<array>
 				<dict>
 					<key>itemUUID</key>
-					<string>dda1e1b2-0da5-4ded-8571-9248da8ba8be</string>
+					<string>4980bce0-8942-4a26-bcdd-984f3a82bf2b</string>
 					<key>rulerVisible</key>
 					<true/>
 					<key>selectedRange</key>
-					<string>{6555, 17}</string>
+					<string>{861, 0}</string>
 					<key>visibleGlyphs</key>
-					<string>{3937, 2640}</string>
+					<string>{0, 861}</string>
 					<key>zoomScale</key>
 					<real>1</real>
 				</dict>
 			</array>
 			<key>windowFrame</key>
-			<string>{{912, 58}, {1591, 1359}}</string>
+			<string>{{1141, 60}, {1182, 1240}}</string>
 		</dict>
 	</array>
 	<key>skIndexVersion</key>

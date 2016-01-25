@@ -12,7 +12,7 @@
 		AWMDhAJmZgEBhg==
 		</data>
 		<key>lastEditingComputerName</key>
-		<string>Mac Pro No. 5</string>
+		<string>IT-PC-MACPRO-002</string>
 		<key>lastEditingUserName</key>
 		<string>mason</string>
 	</dict>
@@ -21,7 +21,7 @@
 	<key>createdDate</key>
 	<date>2016-01-23T13:31:56Z</date>
 	<key>dataHash</key>
-	<string>1b7dd326e073219579212f14c34d47e73ee3ed17</string>
+	<string>5c43c0f894f82808263f577d67b362787422fb96</string>
 	<key>displayName</key>
 	<string>automating installation of ruby on OS X the Mason way</string>
 	<key>encrypted</key>
@@ -31,7 +31,7 @@
 	<key>metaValues</key>
 	<dict/>
 	<key>modifiedDate</key>
-	<date>2016-01-25T04:27:49Z</date>
+	<date>2016-01-25T05:04:35Z</date>
 	<key>shouldHighlightLinks</key>
 	<string>Yes</string>
 	<key>skipOnExport</key>

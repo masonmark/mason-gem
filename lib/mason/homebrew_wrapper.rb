@@ -11,9 +11,55 @@ module Mason
       end
     end
 
+    def interactive?
+      STDIN.tty?
+    end
+
+    def installed_version
+      if path_to_brew
+        version = CommandWrapper.run_command "#{path_to_brew} --version"
+        if version.exit_status == 0 && version.stdout.length > 0
+          return version.stdout.chomp
+        end
+      end
+      return nil # not installed or couldn't make it work
+    end
+
+
+    def installed?
+      installed_version != nil
+    end
+
+
+    def install
+      raise NotYetImplementedError
+    end
+
+    def doctor
+      # exit_status 1 means doctor found some shit to warn about
+      cmd = CommandWrapper.new "#{path_to_brew} doctor"
+      cmd.working_directory = path_to_brew
+      cmd.run
+      cmd
+    end
+
+
+    def update(print_on_failure: interactive?) # make this an instance option?
+      cmd = CommandWrapper.new "#{path_to_brew} update"
+      cmd.working_directory = path_to_brew
+      cmd.run
+
+      if cmd.exit_status != 0 && print_on_failure
+        puts cmd.to_s :full
+      end
+
+      cmd
+    end
+
+
 
     def run
-      raise HomebrewNotInstalledError if installed_version.nil?
+      raise HomebrewNotInstalledError unless installed?
 
 
 
@@ -30,15 +76,6 @@ module Mason
       path if path != nil && path.length > 0
     end
 
-    def installed_version
-      if path_to_brew
-        version = CommandWrapper.run_command "#{path_to_brew} --version"
-        if version.exit_status == 0 && version.stdout.length > 0
-          return version.stdout.chomp
-        end
-      end
-      return nil # not installed or couldn't make it work
-    end
 
     class HomebrewNotInstalledError < StandardError
     end

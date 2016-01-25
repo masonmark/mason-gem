@@ -95,10 +95,25 @@ module Mason
       cw.run
       return cw
     end
-    
+
+    def successful?
+      exit_status == expected_exit_status
+    end
+
+    def failed?
+      exit_status != expected_exit_status
+    end
     
     def to_s(style = :short)
-      "#{self.class.name}: #{@command}"
+      result = "#{self.class.name}: #{@command}\n"
+
+      if style == :full
+        result += "exit_status: #{exit_status}\n"
+        result += "stdout: #{stdout}\n" unless stdout.nil? || stdout.empty?
+        result += "stderr: #{stderr}\n" unless stderr.nil? || stderr.empty?
+      end
+
+      result
     end
     
     # def run
