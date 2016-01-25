@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.description = "A personal utility gem by and for Mason."
   s.authors     = ["Mason Mark"]
   s.email       = 'mason@masonmark.com'
-  s.files       = ["lib/mason.rb", "lib/mason/command_wrapper.rb"]
+  s.files       = ["lib/mason.rb", "lib/mason/command_wrapper.rb", "lib/mason/homebrew_wrapper.rb"]
   s.homepage    = 'http://masonmark.com'
   s.license     = 'MIT'
 end

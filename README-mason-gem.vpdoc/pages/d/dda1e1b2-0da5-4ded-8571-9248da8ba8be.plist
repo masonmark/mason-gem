@@ -19,19 +19,19 @@
 	<key>categories</key>
 	<array/>
 	<key>createdDate</key>
-	<date>2016-01-08T23:15:05Z</date>
+	<date>2016-01-23T13:31:56Z</date>
 	<key>dataHash</key>
-	<string>2aa909af349bab9b3c9df04b8df99dfb71e33c09</string>
+	<string>1b7dd326e073219579212f14c34d47e73ee3ed17</string>
 	<key>displayName</key>
-	<string>Index</string>
+	<string>automating installation of ruby on OS X the Mason way</string>
 	<key>encrypted</key>
 	<string>No</string>
 	<key>key</key>
-	<string>index</string>
+	<string>automating installation of ruby on os x the mason way</string>
 	<key>metaValues</key>
 	<dict/>
 	<key>modifiedDate</key>
-	<date>2016-01-23T13:31:56Z</date>
+	<date>2016-01-25T04:27:49Z</date>
 	<key>shouldHighlightLinks</key>
 	<string>Yes</string>
 	<key>skipOnExport</key>
@@ -39,7 +39,7 @@
 	<key>uti</key>
 	<string>com.apple.rtfd</string>
 	<key>uuid</key>
-	<string>4980bce0-8942-4a26-bcdd-984f3a82bf2b</string>
+	<string>dda1e1b2-0da5-4ded-8571-9248da8ba8be</string>
 	<key>version</key>
 	<integer>1</integer>
 </dict>

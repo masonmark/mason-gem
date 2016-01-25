@@ -19,19 +19,19 @@
 	<key>categories</key>
 	<array/>
 	<key>createdDate</key>
-	<date>2016-01-08T23:15:05Z</date>
+	<date>2016-01-23T13:32:49Z</date>
 	<key>dataHash</key>
-	<string>2aa909af349bab9b3c9df04b8df99dfb71e33c09</string>
+	<string>fe6c0f45e7dcad475dc6c8ca556947d2983ef599</string>
 	<key>displayName</key>
-	<string>Index</string>
+	<string>my notes on installing ruby manually 2016-01-23</string>
 	<key>encrypted</key>
 	<string>No</string>
 	<key>key</key>
-	<string>index</string>
+	<string>my notes on installing ruby manually 2016-01-23</string>
 	<key>metaValues</key>
 	<dict/>
 	<key>modifiedDate</key>
-	<date>2016-01-23T13:31:56Z</date>
+	<date>2016-01-23T13:49:50Z</date>
 	<key>shouldHighlightLinks</key>
 	<string>Yes</string>
 	<key>skipOnExport</key>
@@ -39,7 +39,7 @@
 	<key>uti</key>
 	<string>com.apple.rtfd</string>
 	<key>uuid</key>
-	<string>4980bce0-8942-4a26-bcdd-984f3a82bf2b</string>
+	<string>1a381ccc-8e4a-4f2b-86b2-887737699949</string>
 	<key>version</key>
 	<integer>1</integer>
 </dict>
