@@ -32,24 +32,36 @@ class Derployer
   end
 
 
-  # Decrypt file with ansible vault and return contents (prompts user for password if necessary).
-  def ansible_vault_read(path_to_encrypted_file, name: 'encrypted resource')
+  # Writes the ssh key to a temp file (so it can be passed as an arg to a command-line tool like ansible). The sole arg should be either the path to a key file, or nil to get default behavior, which will try to infer the path to the key based on conventions.
+  def write_ssh_key_to_temp_file(src_file = nil)
 
-    exit_status = 666
-    while exit_status != 0
-      # because ansible value will prompt
+    src_file ||= self[:override_ssh_key] || infer_ssh_key_path
 
-      # FIXME: Make it work with env var if available to avoid prompt
-
-      decrypted_contents = %x( ansible-vault view #{ path_to_encrypted_file } )
-      exit_status = $?.exitstatus
-
-      if exit_status != 0
-        puts "⚠️ ️Unable to decrypt #{ name } at #{path_to_encrypted_file}. Please try again.\n\n"
-      end
+    begin
+      src_file_contents = IO.read File.expand_path(src_file)
+    rescue => err
+      die "can't read SSH key file: #{err}"
     end
+    if src_file_contents.include? 'ANSIBLE_VAULT'
+      src_file_contents = ansible_vault_read src_file
+    end
+    
+    write_temp_file src_file_contents
+  end
+  
+  
+  # Write a string to a secure tempfile and return the path to the file.
+  def write_temp_file(contents)
+    t = Tempfile.new 'private_key.pem'
+    t.write contents
+    t.close
 
-    decrypted_contents
+    @tempfile_hospital << t
+      # Mason 2016-03-15: You MUST keep a ref to a Tempfile-created temp file around; if not, the file will be deleted when instance is GC'd. Caused shitty 30 min headache bug, where SSH connection failed because the key disappeared during connecting!
+
+    FileUtils.chmod 0600, t.path # Mason 2016-03-15: may not be necessary (?), but doesn't hurt.
+
+    t.path
   end
 
 end

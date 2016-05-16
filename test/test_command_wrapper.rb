@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'mason/command_wrapper'
 
-class CommandWrapperTests < MiniTest::Unit::TestCase
+class CommandWrapperTests < Minitest::Test
   # mason 2016-01-23: bringing the first bit of my standard ruby code under one roof...
   # mason 2011-08-05 fucking around porting ancient python stuff
 

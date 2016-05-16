@@ -83,32 +83,6 @@ class Derployer
   end
 
 
-  # Writes the ssh key to a temp file (so it can be passed as an arg to a command-line tool like ansible). The sole arg should be either the path to a key file, or nil to get default behavior, which will try to infer the path to the key based on conventions.
-  def write_ssh_key_to_temp_file(src_file = nil)
-
-    src_file ||= self[:override_ssh_key] || infer_ssh_key_path
-
-    begin
-      src_file_contents = IO.read File.expand_path(src_file)
-    rescue => err
-      die "can't read SSH key file: #{err}"
-    end
-    if src_file_contents.include? 'ANSIBLE_VAULT'
-      src_file_contents = ansible_vault_read src_file
-    end
-
-    t = Tempfile.new 'private_key.pem'
-    t.write src_file_contents
-    t.close
-
-    @tempfile_hospital << t
-      # Mason 2016-03-15: You MUST keep a ref to a Tempfile-created temp file around; if not, the file will be deleted when instance is GC'd. Caused shitty 30 min headache bug, where SSH connection failed because the key disappeared during connecting!
-
-    FileUtils.chmod 0600, t.path # Mason 2016-03-15: may not be necessary (?), but doesn't hurt.
-
-    puts "Wrote SSH key to #{t.path}"
-    t.path
-  end
 
 
   private
