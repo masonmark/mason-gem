@@ -11,10 +11,6 @@ module Mason
       end
     end
 
-    def interactive?
-      STDIN.tty?
-    end
-
     def installed_version
       if path_to_brew
         version = CommandWrapper.run_command "#{path_to_brew} --version"
@@ -31,7 +27,29 @@ module Mason
     end
 
 
+    # Build a proto-command
+    def build_command
+      cmd = CommandWrapper.new
+      # urgh
+    end
+
+
+    # Do the install. If already installed, do nothing and return a success value.
+    def install_homebrew
+      if installed?
+        cmd = CommandWrapper.new
+        cmd.exit_status = 0
+        cmd.expected_exit_status = 0
+        cmd.stdout = "OK. Homebrew is already installed, so no installation is required."
+      else
+        raise NotYetImplementedError
+      end
+
+      cmd
+    end
+
     def install
+      # this is a brew command, so should be used for 'brew install package'
       raise NotYetImplementedError
     end
 

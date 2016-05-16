@@ -15,7 +15,7 @@
 	<key>defaultUUID</key>
 	<string>4980bce0-8942-4a26-bcdd-984f3a82bf2b</string>
 	<key>expectedPageCount</key>
-	<integer>13</integer>
+	<integer>14</integer>
 	<key>lastPDFExportPagePresetName</key>
 	<string>iso-a4</string>
 	<key>lastWebExportOutputURLData</key>
@@ -47,20 +47,20 @@
 	<array>
 		<dict>
 			<key>displayUUID</key>
-			<string>4980bce0-8942-4a26-bcdd-984f3a82bf2b</string>
+			<string>846e4273-3fdc-45f2-a07f-37babde82689</string>
 			<key>drawerOpen</key>
 			<false/>
 			<key>openUUIDProperties</key>
 			<array>
 				<dict>
 					<key>itemUUID</key>
-					<string>4980bce0-8942-4a26-bcdd-984f3a82bf2b</string>
+					<string>846e4273-3fdc-45f2-a07f-37babde82689</string>
 					<key>rulerVisible</key>
 					<true/>
 					<key>selectedRange</key>
-					<string>{861, 0}</string>
+					<string>{2781, 0}</string>
 					<key>visibleGlyphs</key>
-					<string>{0, 861}</string>
+					<string>{356, 2556}</string>
 					<key>zoomScale</key>
 					<real>1</real>
 				</dict>

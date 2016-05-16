@@ -19,19 +19,19 @@
 	<key>categories</key>
 	<array/>
 	<key>createdDate</key>
-	<date>2016-01-08T23:15:05Z</date>
+	<date>2016-01-26T12:12:05Z</date>
 	<key>dataHash</key>
-	<string>d41a7c804dd1c83748d390bdae3a1d3226c55378</string>
+	<string>1d35f53b30e778d1be0b27ccc22713c31b726a91</string>
 	<key>displayName</key>
-	<string>Index</string>
+	<string>reiminscence about defconf4</string>
 	<key>encrypted</key>
 	<string>No</string>
 	<key>key</key>
-	<string>index</string>
+	<string>reiminscence about defconf4</string>
 	<key>metaValues</key>
 	<dict/>
 	<key>modifiedDate</key>
-	<date>2016-01-26T12:12:05Z</date>
+	<date>2016-01-26T13:13:37Z</date>
 	<key>shouldHighlightLinks</key>
 	<string>Yes</string>
 	<key>skipOnExport</key>
@@ -39,7 +39,7 @@
 	<key>uti</key>
 	<string>com.apple.rtfd</string>
 	<key>uuid</key>
-	<string>4980bce0-8942-4a26-bcdd-984f3a82bf2b</string>
+	<string>846e4273-3fdc-45f2-a07f-37babde82689</string>
 	<key>version</key>
 	<integer>1</integer>
 </dict>
