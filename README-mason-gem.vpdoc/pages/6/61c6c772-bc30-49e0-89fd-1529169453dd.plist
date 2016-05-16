@@ -19,19 +19,19 @@
 	<key>categories</key>
 	<array/>
 	<key>createdDate</key>
-	<date>2016-01-08T23:15:05Z</date>
+	<date>2016-05-16T07:34:10Z</date>
 	<key>dataHash</key>
-	<string>42bb37e2416d1ffdaf24b7dbd6c130d8595cbca5</string>
+	<string>07dd60e9c3fd895ebf71897124403fffa523c226</string>
 	<key>displayName</key>
-	<string>Index</string>
+	<string>revisiting this project to implement Derployer</string>
 	<key>encrypted</key>
 	<string>No</string>
 	<key>key</key>
-	<string>index</string>
+	<string>revisiting this project to implement derployer</string>
 	<key>metaValues</key>
 	<dict/>
 	<key>modifiedDate</key>
-	<date>2016-05-16T07:34:10Z</date>
+	<date>2016-05-16T07:36:13Z</date>
 	<key>shouldHighlightLinks</key>
 	<string>Yes</string>
 	<key>skipOnExport</key>
@@ -39,7 +39,7 @@
 	<key>uti</key>
 	<string>com.apple.rtfd</string>
 	<key>uuid</key>
-	<string>4980bce0-8942-4a26-bcdd-984f3a82bf2b</string>
+	<string>61c6c772-bc30-49e0-89fd-1529169453dd</string>
 	<key>version</key>
 	<integer>1</integer>
 </dict>
