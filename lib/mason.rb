@@ -2,6 +2,7 @@ require 'mason/command_wrapper'
 require 'mason/derployer'
 require 'mason/derployer_cli'
 require 'mason/derployer_io'
+require 'mason/derployer_ansible'
 
 module Mason
 

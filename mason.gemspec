@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
                     "lib/mason/derployer.rb",
                     "lib/mason/derployer_cli.rb",
                     "lib/mason/derployer_io.rb",
+                    "lib/mason/derployer_ansible.rb",
                   ]
   s.homepage    = 'http://masonmark.com'
   s.license     = 'MIT'
