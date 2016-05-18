@@ -31,6 +31,8 @@ require 'mason'
 ∂.run {
 
   puts "THE END BRO!"
+
+  ∂.ask 'derp?'
 }
 
 

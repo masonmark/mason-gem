@@ -1,0 +1,33 @@
+# site.yml — the master Ansible playbook for Rollerball
+#
+# This playbook is intended to be driven by a Derployer-based script.
+#
+# (Actually, this particular playbook is for testing Derployer.)
+
+- hosts: all
+  vars:
+
+    sysadmin_username: centos
+    server_type: development
+    machine_type: generic
+
+    app_name: rollerball
+
+    app_db_username: '{{ app_name }}'
+    time_zone: Asia/Tokyo
+    sysadmin_homedir: /home/{{sysadmin_username}}
+    rails_version: '4.2.3'
+    project_deploy_root: '/{{ app_name }}'
+    rails_app_root: '/{{ app_name }}/rails_app'
+    rails_app_user: '{{ app_name }}'
+    rails_app_user_homedir: /home/{{rails_app_user}}
+
+
+#  roles:
+#    - role: test
+
+  tasks:
+    - command: whoami
+      register: who_i_am
+
+    - debug: var=who_i_am

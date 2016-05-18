@@ -19,6 +19,7 @@ class Derployer
     @name || 'generic'
   end
 
+
   # Returns a Pathname
   def path_to_root
     path_to_script = Pathname.new(File.expand_path $PROGRAM_NAME)

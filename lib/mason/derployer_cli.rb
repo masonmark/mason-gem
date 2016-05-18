@@ -23,6 +23,8 @@ class Derployer
     puts "#{ prefix }#{ obj }"
   end
 
+
+  # Show introductory text.
   def greet_user
 
     path_to_tool = File.expand_path $PROGRAM_NAME
@@ -37,6 +39,8 @@ class Derployer
     putz ""
   end
 
+
+  # Kludge-process args
   def process_args
 
     @active_settings = default_settings
@@ -81,7 +85,7 @@ class Derployer
     elsif valid_values
       new_setting = select_value_from_list setting_name, valid_values
     else
-      new_setting  = ask "Enter value#{' (' + valid_values.join('/') +')' if valid_values} for #{setting_name}: [#{@settings[setting_name]}]"
+      new_setting  = ask "Enter value#{' (' + valid_values.join('/') +')' if valid_values} for #{setting_name}: [#{active_settings9[setting_name]}]"
     end
 
     if validate_user_input setting_name, new_setting
@@ -129,6 +133,7 @@ class Derployer
     end
   end
 
+
   def confirm_settings(error_message=nil)
     if error_message
       putz ''
@@ -153,6 +158,5 @@ class Derployer
       change_setting answer
     end
   end
-
 
 end

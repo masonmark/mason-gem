@@ -31,30 +31,34 @@ class Derployer
     decrypted_contents
   end
 
+  # read DERPLOYER_ANSIBLE_VAULT_PASSWORD
   def ansible_vault_password_from_environment
     ENV['DERPLOYER_ANSIBLE_VAULT_PASSWORD']
   end
 
+  # Write out simple single-host Ansible inventory to a temp file.
   def write_ansible_inventory_file
 
     server_type     = self[:server_type]
     target_host     = self[:target_host]
     target_ssh_port = self[:target_ssh_port]
 
-    inventory_content = [
-      "[#{ server_type }]",
-      "ansible_ssh_host=#{ target_host }",
-      "ansible_ssh_port=#{ target_ssh_port }",
-    ].join("\n")
+    inventory_content =
+      "[#{ server_type }]\n"                  \
+      "deploy_target "                        \
+      " ansible_ssh_host=#{ target_host }"    \
+      " ansible_ssh_port=#{ target_ssh_port }"
 
     write_temp_file(inventory_content)
   end
 
+
+  # Build the convoluted ansible-playbook command, with all the arguments and extra-vars.
   def build_ansible_command(inventory:, playbook:, extra_vars:, ssh_key:)
 
      extra_vars_str = '--extra-vars "'
      extra_vars.each { |k|
-     extra_vars_str += "#{ k }='#{ self[k] }' " # note trailing space
+       extra_vars_str += "#{ k }='#{ self[k] }' " # note trailing space
      }
      extra_vars_str += '"'
 
@@ -67,6 +71,7 @@ class Derployer
        "--user='#{ username }'",
        "--private-key='#{ ssh_key }'",
        "--ask-vault-pass",
+       # "-vvvvv",
        extra_vars_str,
        playbook
      ].join " \\\n" # can't have whitespace after \ in shell
