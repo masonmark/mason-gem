@@ -36,4 +36,30 @@ class DerployerTests < Minitest::Test
     assert_equal read, text
   end
 
+
+  def test_value_creation
+    d = @derp
+    d.define foo: ['bar', 'baz']
+    d.define ass: 'hat'
+
+    d.define_value_list :production, {}
+
+    d.define_value_list :snausages, {
+      foo: 'baz'
+    }
+
+    d.current_value_list = nil # should mean all vals are default
+    assert_equal 'bar', d[:foo]
+    assert d[:ass] == 'hat'
+
+    d.current_value_list = :production
+    assert d[:foo] == 'bar'
+    assert d[:ass] == 'hat'
+
+    d.current_value_list = :snausages
+    assert d[:foo] == 'baz'
+    assert d[:ass] == 'hat'
+
+  end
+
 end

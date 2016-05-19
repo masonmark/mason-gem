@@ -4,19 +4,31 @@ require 'mason'
 
 ∂ = Derployer.new()
 
-∂.register_settings :production, {
+# Define some deploy settings.
 
-  ansible_playbook:    '/Users/mason/Code/rollerball/ansible/site.yml',
-  default_rails_env:   'production',
-  deploy_application:  'yes',
-  deploy_git_revision: 'master',
-  machine_type:        'generic',
-  override_ssh_key:    '~/id_rsa',
-  server_type:         'production',
-  sysadmin_user_name:  'centos',
-  target_host:         '52.69.141.51',
-  target_ssh_port:      22,
-}
+∂.define foo: 'bar'
+
+∂.define ansible_playbook: ['/Users/mason/Code/rollerball/ansible/site.yml'],
+                     info: "path to Ansible playbook that will be run",
+
+
+∂.define machine_type: ['generic', 'vmware-fusion'],
+                 info: "vmware-fusion enabled hacks required by HGFS (e.g., disabling SELinux) are performed",
+              enforce: true
+
+∂.define deploy_application: ['production', 'development']　#FUCK THIS ONE
+
+∂.define deploy_application:  'yes',
+∂.define deploy_git_revision: 'master',
+∂.define machine_type:        'generic',
+∂.define override_ssh_key:    '~/id_rsa',
+∂.define server_type:         'production',
+∂.define sysadmin_user_name:  'centos',
+∂.define target_host:         '52.69.141.51',
+∂.define target_ssh_port:      22,
+
+
+∂.register_settings :production, {} # that just means all settings are default
 
 ∂.register_settings :development, {
 
@@ -27,6 +39,7 @@ require 'mason'
     sysadmin_user_name:  'centos',
     target_host:         '192.168.11.79',
 }
+
 
 ∂.run {
 

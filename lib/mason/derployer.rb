@@ -5,19 +5,22 @@ require 'yaml'
 
 class Derployer
 
-  def initialize(name = nil)
-    @name                 = name
-    @active_settings      = nil
-    @registered_settings  = {} # keys are identifiers, values are settings dictionaries
-    @run_block            = -> { puts "Derp! Somehow, this Derployer was run w/o a run_block." }
+  attr_accessor :current_value_list
 
-    @tempfile_hospital    = []
+  def initialize(name = nil)
+    @name               = name
+    @value_definitions   = {}
+    @value_lists        = {} # {sym: {sym: "val"}}
+
+    @tempfile_hospital    = [] # keeps tempfile instances from deallocing when var goes out of scope
   end
 
   # Returns the name of the Deployer instance, e.g. "deploy-rollerball". Returns "generic" if no name is set.
   def name
     @name || 'generic'
   end
+
+
 
 
   # Returns a Pathname
@@ -31,27 +34,28 @@ class Derployer
     path_to_parent
   end
 
-  def register_settings(identifier, dictionary)
-    @registered_settings[identifier.to_sym] = dictionary
-  end
 
-
-  def registered_settings_names
-    @registered_settings.keys.map { |x| x.to_s }
-  end
-
-  def registered_settings(identifier)
-    @registered_settings[identifier.to_sym]
-  end
-
-
-  def default_settings
-    if first = @registered_settings.first
-      first[1]
-    else
-      {}
-    end
-  end
+  # def register_settings(identifier, dictionary)
+  #   @registered_settings[identifier.to_sym] = dictionary
+  # end
+  #
+  #
+  # def registered_settings_names
+  #   @registered_settings.keys.map { |x| x.to_s }
+  # end
+  #
+  # def registered_settings(identifier)
+  #   @registered_settings[identifier.to_sym]
+  # end
+  #
+  #
+  # def default_settings
+  #   if first = @registered_settings.first
+  #     first[1]
+  #   else
+  #     {}
+  #   end
+  # end
 
 
   def valid_settings_values
@@ -69,13 +73,14 @@ class Derployer
   end
 
 
-  def active_settings
-    @active_settings || default_settings
-  end
-
-
   def [](ident)
-    return active_settings[ident]
+    value =  @value_definitions[ident]
+
+    raise "Undefined deploy value: #{ident}" if value.nil?
+
+    override_value = current_value_list && current_value_list[ident]
+
+    return override_value || value.default
   end
 
 
@@ -115,7 +120,7 @@ class Derployer
   end
 
   def sysadmin_username
-    return active_settings[:sysadmin_username]
+    return self[:sysadmin_username]
   end
 
 

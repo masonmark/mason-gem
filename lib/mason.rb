@@ -3,6 +3,7 @@ require 'mason/derployer'
 require 'mason/derployer_cli'
 require 'mason/derployer_io'
 require 'mason/derployer_ansible'
+require 'mason/derployer_value'
 
 module Mason
 

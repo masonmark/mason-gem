@@ -45,11 +45,11 @@ class Derployer
     if src_file_contents.include? 'ANSIBLE_VAULT'
       src_file_contents = ansible_vault_read src_file
     end
-    
+
     write_temp_file src_file_contents, prefix: 'private_key'
   end
-  
-  
+
+
   # Write a string to a secure tempfile and return the path to the file.
   def write_temp_file(contents, prefix: 'tempfile')
     t = Tempfile.new prefix
