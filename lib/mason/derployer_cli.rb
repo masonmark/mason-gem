@@ -43,7 +43,6 @@ class Derployer
   # Kludge-process args
   def process_args
 
-    @active_settings = default_settings
 
     # use slop you reject!! and self-bundle you trasher!
 
@@ -52,20 +51,25 @@ class Derployer
       settings_write({})
     end
 
-    settings_names_from_args = registered_settings_names.select { |name| ARGV.include? name }
+    vlist_identifiers = @value_lists.keys
+    settings_names_from_args = vlist_identifiers.select { |identifier| ARGV.include? identifier.to_s }
     name_of_settings_to_load = settings_names_from_args.last
       # kludge: since we dont parse opts for real (yet), just use last valid value:
 
     if ARGV.include? name_of_settings_to_load
 
       putz "Initializing with settings for '#{ name_of_settings_to_load }'"
-      @active_settings.merge! registered_settings(name_of_settings_to_load)
+      current_value_list_identifier = name_of_settings_to_load.to_sym
 
     else
       previous_settings = settings_read
       if previous_settings.count > 0
         putz "Initializing with last-used settings."
-        @active_settings.merge! previous_settings
+
+        #@active_settings.merge! previous_settings
+        putz "FIX THAT: NOT REIMPLEMENTED"
+
+
       else
         putz "Initializing with default settings."
       end

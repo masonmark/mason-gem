@@ -5,21 +5,34 @@ require 'yaml'
 
 class Derployer
 
-  attr_accessor :current_value_list
+  attr_accessor :current_value_list_identifier
+    # only one value list can be "current"
 
   def initialize(name = nil)
-    @name               = name
-    @value_definitions   = {}
-    @value_lists        = {} # {sym: {sym: "val"}}
 
-    @tempfile_hospital    = [] # keeps tempfile instances from deallocing when var goes out of scope
+    @name = name
+
+    @value_definitions = {}
+      # The list of DerpVal instances that define what deploy values exist.
+      # {symbol (DerpVal identifier): DerpVal instance}
+
+    @value_lists = {}
+      # The named lists of values (e.g., :production, :staging, etc)
+      # {symbol (id of vlist): {symbol (DerpVal identifier): string}}
+
+    @value_overrides = {}
+      # User-specified overrides (e.g. entered on command line)
+
+    @tempfile_hospital = []
+      # keeps tempfile instances from deallocing when var goes out of scope
+
+
   end
 
   # Returns the name of the Deployer instance, e.g. "deploy-rollerball". Returns "generic" if no name is set.
   def name
     @name || 'generic'
   end
-
 
 
 
@@ -34,54 +47,6 @@ class Derployer
     path_to_parent
   end
 
-
-  # def register_settings(identifier, dictionary)
-  #   @registered_settings[identifier.to_sym] = dictionary
-  # end
-  #
-  #
-  # def registered_settings_names
-  #   @registered_settings.keys.map { |x| x.to_s }
-  # end
-  #
-  # def registered_settings(identifier)
-  #   @registered_settings[identifier.to_sym]
-  # end
-  #
-  #
-  # def default_settings
-  #   if first = @registered_settings.first
-  #     first[1]
-  #   else
-  #     {}
-  #   end
-  # end
-
-
-  def valid_settings_values
-
-    #FIXME: make these registerable
-
-    {
-      ansible_playbook:    ['ansible/site.yml', 'ansible/test-playbook.yml'],
-      default_rails_env:   ['production', 'development'],
-      deploy_application:  ['yes', 'no'],
-      deploy_git_revision: ['master', 'none'],
-      machine_type:        ['generic', 'vmware-fusion'], # because, there are several vmware-specific hacks we need to do.
-      server_type:         ['development', 'staging', 'production'], # the intended purpose of the server (controls rails env, credentials)
-    }
-  end
-
-
-  def [](ident)
-    value =  @value_definitions[ident]
-
-    raise "Undefined deploy value: #{ident}" if value.nil?
-
-    override_value = current_value_list && current_value_list[ident]
-
-    return override_value || value.default
-  end
 
 
   def run

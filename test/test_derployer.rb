@@ -36,6 +36,20 @@ class DerployerTests < Minitest::Test
     assert_equal read, text
   end
 
+  def test_active_values
+    d = @derp
+    d.define foo: ['bar', 'baz']
+    d.define ass: 'hat'
+
+    expected = {foo: 'bar', ass: 'hat'}
+    assert_equal expected, d.active_values
+
+    d.override :foo, 'taco salad'
+    expected = {foo: 'taco salad', ass: 'hat'}
+    assert_equal expected, d.active_values
+
+
+  end
 
   def test_value_creation
     d = @derp
@@ -48,15 +62,15 @@ class DerployerTests < Minitest::Test
       foo: 'baz'
     }
 
-    d.current_value_list = nil # should mean all vals are default
+    d.current_value_list_identifier = nil # should mean all vals are default
     assert_equal 'bar', d[:foo]
     assert d[:ass] == 'hat'
 
-    d.current_value_list = :production
+    d.current_value_list_identifier = :production
     assert d[:foo] == 'bar'
     assert d[:ass] == 'hat'
 
-    d.current_value_list = :snausages
+    d.current_value_list_identifier = :snausages
     assert d[:foo] == 'baz'
     assert d[:ass] == 'hat'
 
