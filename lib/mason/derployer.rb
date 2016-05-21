@@ -3,22 +3,28 @@ require 'pathname'
 require 'tempfile'
 require 'yaml'
 
+
+# Derployer manages a collection of DerpVar instances ("derp vars"), which define values that control a deploy. The derp vars are themselves immutable, but they have values associated with them; those values have defaults and may be overridden individually or in groups. The derp vars are just definitions that determine things like default values, allowed values, and other metadata; the state pertaining to what value is associated with each derp var is maintained by the Derployer object.
+#
+# Basically there are three levels at which values are assigned to derp vars: 1.) each derp var has a default value, but 2.) that may be overridden by the currently active value list (i.e. named group of values, e.g. 'production', 'staging', etc), and 3.) those values in turn may be overridden by the user for a given deploy.
+
 class Derployer
 
-  attr_accessor :current_value_list_identifier
-    # only one value list can be "current"
 
   def initialize(name = nil)
 
     @name = name
 
+    @active_value_list_identifier = nil
+      # Only one value list can be "active".
+
     @value_definitions = {}
-      # The list of DerpVal instances that define what deploy values exist.
-      # {symbol (DerpVal identifier): DerpVal instance}
+      # The list of DerpVar instances that define what deploy values exist.
+      # {symbol (DerpVar identifier): DerpVar instance}
 
     @value_lists = {}
       # The named lists of values (e.g., :production, :staging, etc)
-      # {symbol (id of vlist): {symbol (DerpVal identifier): string}}
+      # {symbol (id of vlist): {symbol (DerpVar identifier): string}}
 
     @value_overrides = {}
       # User-specified overrides (e.g. entered on command line)

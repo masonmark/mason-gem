@@ -10,13 +10,23 @@ class Derployer
     allowed_values = dict.values[0]
     allowed_values = [allowed_values] unless allowed_values.is_a? Array
 
-    dv = DerpVal.new identifier: identifier,
-                 allowed_values: allowed_values,
-                           info: dict[:info],
-                        enforce: dict[:enforce] == true
+    dv = DerpVar.new identifier: identifier,
+                     allowed_values: allowed_values,
+                     info: dict[:info],
+                     enforce: dict[:enforce] == true
 
     @value_definitions[dv.identifier] = dv
   end
+
+  def activate_value_list(identifier)
+    @active_value_list_identifier = identifier
+  end
+
+
+  def active_value_list
+    @value_lists[@active_value_list_identifier]
+  end
+
 
   #FIXME: rename?
   def define_value_list(identifier_sym, values = {})
@@ -43,26 +53,26 @@ class Derployer
   end
 
 
+  # Return the active value for each derp var. The precedence is: 1. value overrides, 2. active value list, 3. derp var default value
   def active_values
+
     result = {}
 
-    current_vlist  = @value_lists[current_value_list_identifier] || {}
-    override_vlist = @value_overrides
-
-    @value_definitions.each do |identifier, derpval|
-      result[identifier] = override_vlist[identifier] || current_vlist[identifier] || derpval.default
+    @value_definitions.keys.each do |identifier|
+      result[identifier] = self[identifier]
     end
     result
   end
 
-  def [](ident)
-    value =  @value_definitions[ident]
+  def [](identifier)
 
-    raise "Undefined deploy value: #{ident}" if value.nil?
-    list = @value_lists[current_value_list_identifier]
-    override_value = list && list[ident]
+    value_definition =  @value_definitions[identifier]
+    raise "Undefined deploy value: #{identifier}" if value_definition.nil?
 
-    return override_value || value.default
+    active_vlist  = active_value_list || {}
+    override_vlist = @value_overrides || {}
+
+    return override_vlist[identifier] || active_vlist[identifier] || value_definition.default
   end
 
 
@@ -70,7 +80,7 @@ class Derployer
 end
 
 
-class DerpVal
+class DerpVar
 
   attr_reader :identifier, :allowed_values, :enforce
 

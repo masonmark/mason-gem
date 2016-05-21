@@ -59,7 +59,7 @@ class Derployer
     if ARGV.include? name_of_settings_to_load
 
       putz "Initializing with settings for '#{ name_of_settings_to_load }'"
-      current_value_list_identifier = name_of_settings_to_load.to_sym
+      activate_value_list name_of_settings_to_load.to_sym
 
     else
       previous_settings = settings_read
