@@ -18,6 +18,12 @@ class Derployer
     @value_definitions[dv.identifier] = dv
   end
 
+
+  def value_definition(identifier)
+    @value_definitions[identifier]
+  end
+
+
   def activate_value_list(identifier)
     @active_value_list_identifier = identifier
   end
@@ -38,19 +44,25 @@ class Derployer
     @value_overrides[identifier] = value
   end
 
-  def valid_settings_values
 
-    #FIXME: make these registerable
-
-    {
-        ansible_playbook:    ['ansible/site.yml', 'ansible/test-playbook.yml'],
-        default_rails_env:   ['production', 'development'],
-        deploy_application:  ['yes', 'no'],
-        deploy_git_revision: ['master', 'none'],
-        machine_type:        ['generic', 'vmware-fusion'], # because, there are several vmware-specific hacks we need to do.
-        server_type:         ['development', 'staging', 'production'], # the intended purpose of the server (controls rails env, credentials)
-    }
+  def valid_values_for(identifier)
+    value_definition(identifier).allowed_values
   end
+
+
+  # def valid_settings_values
+  #
+  #   #FIXME: make these registerable
+  #
+  #   {
+  #       ansible_playbook:    ['ansible/site.yml', 'ansible/test-playbook.yml'],
+  #       default_rails_env:   ['production', 'development'],
+  #       deploy_application:  ['yes', 'no'],
+  #       deploy_git_revision: ['master', 'none'],
+  #       machine_type:        ['generic', 'vmware-fusion'], # because, there are several vmware-specific hacks we need to do.
+  #       server_type:         ['development', 'staging', 'production'], # the intended purpose of the server (controls rails env, credentials)
+  #   }
+  # end
 
 
   # Return the active value for each derp var. The precedence is: 1. value overrides, 2. active value list, 3. derp var default value
@@ -80,20 +92,3 @@ class Derployer
 end
 
 
-class DerpVar
-
-  attr_reader :identifier, :allowed_values, :enforce
-
-  def initialize(identifier:, allowed_values:, info: nil, enforce: false)
-    @identifier     = identifier
-    @allowed_values = allowed_values
-    @info           = info
-    @enforce        = enforce
-
-  end
-
-  def default
-    allowed_values[0]
-  end
-
-end

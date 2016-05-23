@@ -23,7 +23,7 @@ require 'mason'
 ∂.define machine_type:        'generic'
 ∂.define override_ssh_key:    '~/id_rsa'
 ∂.define server_type:         'production'
-∂.define sysadmin_user_name:  'centos'
+∂.define sysadmin_username:  'centos'
 ∂.define target_host:         '52.69.141.51'
 ∂.define target_ssh_port:      22
 
@@ -36,7 +36,7 @@ require 'mason'
     deploy_git_revision: 'none',
     machine_type:        'vmware-fusion',
     server_type:         'development',
-    sysadmin_user_name:  'centos',
+    sysadmin_username:   'centos',
     target_host:         '192.168.11.79',
 }
 

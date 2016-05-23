@@ -4,6 +4,7 @@ require 'mason/derployer_cli'
 require 'mason/derployer_io'
 require 'mason/derployer_ansible'
 require 'mason/derployer_value'
+require 'mason/derp_var'
 
 module Mason
 

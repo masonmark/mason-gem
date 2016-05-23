@@ -25,7 +25,7 @@ class Derployer
 
 
   # Save settings.
-  def settings_write(settings_hash = active_settings)
+  def settings_write(settings_hash = active_values)
     File.open settings_path, 'w' do |f|
       f.write settings_hash.to_yaml
     end

@@ -80,20 +80,20 @@ class Derployer
   def change_setting(user_input)
     setting_number = user_input.to_i
     setting_index  = setting_number - 1
-    setting_name   = active_settings.keys[setting_index] # ordered hash ftw
-    valid_values   = valid_settings_values[setting_name]
+    setting_name   = active_values.keys[setting_index] # ordered hash ftw
+    valid_values   = valid_values_for setting_name
     new_setting    = nil
 
-    if setting_number < 1 || setting_number > active_settings.count
+    if setting_number < 1 || setting_number > active_values.count
       puts "Sorry, '#{user_input}' is not a valid selection. Please try again.\n"
     elsif valid_values
       new_setting = select_value_from_list setting_name, valid_values
     else
-      new_setting  = ask "Enter value#{' (' + valid_values.join('/') +')' if valid_values} for #{setting_name}: [#{active_settings9[setting_name]}]"
+      new_setting  = ask "Enter value#{' (' + valid_values.join('/') +')' if valid_values} for #{setting_name}: [#{active_values[setting_name]}]"
     end
 
     if validate_user_input setting_name, new_setting
-      active_settings[setting_name] = new_setting
+      active_values[setting_name] = new_setting
     else
       error_message = "👹  Warning: '#{new_setting}' is not an acceptable value for #{setting_name}; settings were not changed."
     end
@@ -114,7 +114,7 @@ class Derployer
     end
     answers << ''
 
-    answer = ask "\n[Enter/Return] accept current value: #{ active_settings[setting_name] }"
+    answer = ask "\n[Enter/Return] accept current value: #{ active_values[setting_name] }"
 
     if answer == ''
       active_settings[setting_name]
@@ -129,12 +129,8 @@ class Derployer
 
 
   def validate_user_input(setting, value)
-    valid_values = valid_settings_values[setting]
-    if valid_values
-      valid_values.include? value
-    else
-      ! [nil, ''].include?(value)
-    end
+    dv = value_definition setting
+    dv.validate value
   end
 
 
@@ -149,7 +145,7 @@ class Derployer
     putz ""
 
     i = 1
-    active_settings.each do |k, v|
+    active_values.each do |k, v|
       putz "[#{i.to_s}] #{k}: #{v}"
       i += 1
     end
