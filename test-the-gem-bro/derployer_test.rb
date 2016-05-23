@@ -1,5 +1,23 @@
 #!/usr/bin/env ruby
 
+unless ENV['BUNDLE_GEMFILE']
+  puts "  ☠   "
+  puts "  ☠   ERROR: BUNDLER ENVIRONMENT REQUIRED."
+  puts "  ☠   "
+  puts "  ☠   It seems you are not using Bundler to"
+  puts "  ☠   invoke this script. It is required."
+  puts "  ☠   "
+  puts "  ☠   Please re-run this script something like:"
+
+  puts ""
+  puts "       bundle exec #{$PROGRAM_NAME} #{ARGV}"
+
+  puts "  ☠   "
+  abort()
+end
+
+
+
 require 'mason'
 
 ∂ = Derployer.new()
