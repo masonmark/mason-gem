@@ -28,7 +28,7 @@ class Derployer
     @active_value_list_identifier = identifier
   end
 
-
+  # Returns the "active value list", e.g. 'production' or 'staging'. NOTE: This list is the middle tier of values and there may be overrides that have precedence over the values in this list. User active_values() get the currently-active values of each derp var.
   def active_value_list
     @value_lists[@active_value_list_identifier]
   end

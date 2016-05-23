@@ -86,11 +86,18 @@ class Derployer
 
     if setting_number < 1 || setting_number > active_values.count
       puts "Sorry, '#{user_input}' is not a valid selection. Please try again.\n"
-    elsif valid_values
-      new_setting = select_value_from_list setting_name, valid_values
     else
-      new_setting  = ask "Enter value#{' (' + valid_values.join('/') +')' if valid_values} for #{setting_name}: [#{active_values[setting_name]}]"
+      new_setting = edit_value setting_name
     end
+
+
+#     if setting_number < 1 || setting_number > active_values.count
+#       puts "Sorry, '#{user_input}' is not a valid selection. Please try again.\n"
+#     elsif valid_values
+#       new_setting = select_value_from_list setting_name, valid_values
+#     else
+#       new_setting  = ask "Enter value#{' (' + valid_values.join('/') +')' if valid_values} for #{setting_name}: [#{active_values[setting_name]}]"
+#     end
 
     if validate_user_input setting_name, new_setting
       active_values[setting_name] = new_setting
@@ -99,6 +106,34 @@ class Derployer
     end
 
     confirm_settings error_message
+  end
+
+  # Present UI to edit the value corresponding to identifier. The corresponding derp var determines what kind of UI is available (menu, direct entry, etc).
+  def edit_value(identifier)
+    identifier = identifier.to_sym # the Dynamic Language Tax...
+
+    puts ''
+    puts "  EDIT VALUE: #{ identifier }"
+    puts ''
+
+    dv = value_definition identifier
+
+    if dv.predefined_values_for_edit_menu
+      puts '  [1-9]: Select new value from list'
+    end
+
+    unless dv.enforce
+      puts '      I: Input new value directly'
+    end
+
+    first_answer = ask ""
+
+    if first_answer.downcase == 'i'
+      ENV.each { |k,v|  puts "#{k}: #{v}"}
+    else
+      abort 'not implemented BRUO'
+    end
+
   end
 
 

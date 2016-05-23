@@ -19,4 +19,8 @@ class DerpVar
     enforce == false || allowed_values.nil? || allowed_values.include?(value)
   end
 
+  def predefined_values_for_edit_menu
+    return @allowed_values
+  end
+
 end
