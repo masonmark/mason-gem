@@ -5,9 +5,23 @@ require 'pathname'
 
 class DerployerTests < Minitest::Test
 
-  def setup
-    @derp = Derployer.new
+  def append_output(new_output)
+    @output ||= ''
+    @output += new_output
   end
+
+  def setup
+    @output = nil
+    pblock = lambda {|what| self.append_output(what)}
+    @derp = Derployer.new('TEST', print_block: pblock)
+  end
+
+
+  def test_test_can_capture_output
+    @derp.print "yep"
+    assert_equal "yep\n", @output
+  end
+
 
 
   def test_ansible_vault_read
@@ -36,6 +50,7 @@ class DerployerTests < Minitest::Test
     assert_equal read, text
   end
 
+
   def test_active_values
     d = @derp
     d.define foo: ['bar', 'baz']
@@ -55,8 +70,6 @@ class DerployerTests < Minitest::Test
     d.override :foo, 'taco salad'
     expected = {foo: 'taco salad', ass: 'hat'}
     assert_equal expected, d.active_values
-
-
   end
 
   def test_value_creation
@@ -82,6 +95,97 @@ class DerployerTests < Minitest::Test
     assert d[:foo] == 'baz'
     assert d[:ass] == 'hat'
 
+  end
+
+
+  def test_effect_of_edit_value
+
+    d = @derp
+    d.define foo: ['bar']
+    actual = d.edit_value :foo, user_inputs: ['baz']
+    assert_equal 'baz', actual
+
+    # Now we have changed the value, so on next edit the menu should appear. Pressing Return should accept current value:
+    actual = d.edit_value :foo, user_inputs: ['']
+    assert_equal 'baz', actual
+
+    # choose things from menu:
+    d.define whut: ['whut', 'in', 'the']
+    actual = d.edit_value :whut, user_inputs: [3]
+    assert_equal 'the', actual
+
+    actual = d.edit_value :whut, user_inputs: [2]
+    assert_equal 'in', actual
+
+    actual = d.edit_value :whut, user_inputs: ['']
+    assert_equal 'in', actual
+
+    # use 'i' to input directly, but then just hit Return to accept current value:
+    actual = d.edit_value :whut, user_inputs: ['i', '']
+    assert_equal 'in', actual
+
+    # do again but this time enter something
+    actual = d.edit_value :whut, user_inputs: ['i', 'snausages', '']
+    assert_equal 'snausages', actual
+
+  end
+
+
+  def test_output_of_edit_value_non_editable_case
+    d = @derp
+    d.define foo: ['bar'], enforce: true
+
+    expected = <<~ERROR_OUTPUT
+
+     ===== EDIT VALUE: foo =====================================================================
+
+     Derrrp! can't edit foo: it is configured with only 1 valid value (bar)
+    ERROR_OUTPUT
+
+    d.edit_value :foo
+
+    assert_equal expected, @output
+  end
+
+
+  def test_output_of_edit_value_enforced_choice_case
+    d = @derp
+    d.define machine_type: ['generic', 'vmware-fusion'],
+                     info: "vmware-fusion enabled hacks required by HGFS (e.g., disabling SELinux) are performed",
+                  enforce: true
+
+    d.edit_value :machine_type, user_inputs: ['2']
+
+    expected = <<~OUTPUT
+
+      ===== EDIT VALUE: machine_type ============================================================
+
+      [1] generic
+      [2] vmware-fusion
+
+      Choose from menu, or press ↩︎ to accept current value: generic
+      > 2
+
+      Value of machine_type changed to: vmware-fusion
+    OUTPUT
+
+    assert_equal expected, @output
+
+  end
+
+
+  def test_print_replacement
+    # make sure it actually works
+
+    pblock = lambda {|what| return "HUMPTY#{what}"}
+    humpty_derpty = Derployer.new('HUMPTY', print_block: pblock)
+
+    output  = ""
+    output += humpty_derpty.print "foo"
+    output += humpty_derpty.print "bar"
+
+    expected = "HUMPTYfoo\nHUMPTYbar\n"
+    assert_equal expected, output
   end
 
 end

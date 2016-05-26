@@ -1,9 +1,37 @@
 class Derployer
 
-  # Get (stripped) user input.
-  def ask(q, a='')
-    puts q
-    STDIN.gets.strip
+
+  # Invokes the print_block, if one was supplied during initialization, otherwise just calls Kernel.print().
+  def print(what, terminator: "\n")
+
+    text = "#{what}#{terminator}"
+
+    if @print_block
+      return @print_block.call(text)
+    else
+      Kernel.print(text)
+    end
+  end
+
+
+  # Returns a string containing the user input.
+  def ask(q, strip: true, prompt: "> ", inputs: nil)
+
+    inputs ||= FakeInput.new
+
+    print q
+    print prompt, terminator: nil
+
+    fake = inputs.next
+    if fake
+      print fake
+      answer = fake
+    else
+      answer = STDIN.gets
+      answer.strip! if strip
+    end
+
+    answer
   end
 
 
@@ -29,25 +57,25 @@ class Derployer
 
     path_to_tool = File.expand_path $PROGRAM_NAME
 
-    putz ""
-    putz "--- DErPLOYer: #{ name } ---"
-    putz "(#{ path_to_tool })"
-    putz ""
-    putz "This tool can help provision a server and/or deploy an app."
-    putz "With no args, this script will use the last-used or default settings."
-    putz ""
-    putz ""
+    begin_section "DErPLOYer: #{ name }"
+
+    print ''
+    print "(#{ path_to_tool })"
+    print ""
+    print "This tool can help provision a server and/or deploy an app."
+    print "With no args, this script will use the last-used or default settings."
+    print ""
+
   end
 
 
   # Kludge-process args
   def process_args
 
-
     # use slop you reject!! and self-bundle you trasher!
 
     if ARGV.include? 'reset'
-      puts "Resetting all settings to default."
+      print "Resetting all settings to default."
       settings_write({})
     end
 
@@ -58,108 +86,142 @@ class Derployer
 
     if ARGV.include? name_of_settings_to_load
 
-      putz "Initializing with settings for '#{ name_of_settings_to_load }'"
+      print "Initializing with settings for '#{ name_of_settings_to_load }'"
       activate_value_list name_of_settings_to_load.to_sym
 
     else
       previous_settings = settings_read
       if previous_settings.count > 0
-        putz "Initializing with last-used settings."
+        print "Initializing with last-used settings."
 
         #@active_settings.merge! previous_settings
-        putz "FIX THAT: NOT REIMPLEMENTED"
+        print "FIXME: NOT REIMPLEMENTED YET BRO"
 
 
       else
-        putz "Initializing with default settings."
+        print "Initializing with default settings."
       end
     end
+
+    end_section
   end
 
 
-  def change_setting(user_input)
-    setting_number = user_input.to_i
-    setting_index  = setting_number - 1
-    setting_name   = active_values.keys[setting_index] # ordered hash ftw
-    valid_values   = valid_values_for setting_name
-    new_setting    = nil
+  def begin_section(title)
+    section_top = "\n"
+    content  = "===== #{title} "
+    needed   = (92 - content.length - 1)
+    content += '=' * needed unless needed < 1
 
-    if setting_number < 1 || setting_number > active_values.count
-      puts "Sorry, '#{user_input}' is not a valid selection. Please try again.\n"
-    else
-      new_setting = edit_value setting_name
-    end
-
-
-#     if setting_number < 1 || setting_number > active_values.count
-#       puts "Sorry, '#{user_input}' is not a valid selection. Please try again.\n"
-#     elsif valid_values
-#       new_setting = select_value_from_list setting_name, valid_values
-#     else
-#       new_setting  = ask "Enter value#{' (' + valid_values.join('/') +')' if valid_values} for #{setting_name}: [#{active_values[setting_name]}]"
-#     end
-
-    if validate_user_input setting_name, new_setting
-      active_values[setting_name] = new_setting
-    else
-      error_message = "👹  Warning: '#{new_setting}' is not an acceptable value for #{setting_name}; settings were not changed."
-    end
-
-    confirm_settings error_message
+    print section_top + content
   end
+
+  def end_section
+    # print section_bottom
+  end
+
+
+  def print_menu(menu)
+
+    return if menu.nil? || menu == {}
+
+    longest_choice, _ = menu.max_by {|a| a[0].length}
+    menu.each do |k,v|
+      print "[#{k.rjust(longest_choice.to_i)}] ", terminator: nil
+      print "#{v}"
+    end
+  end
+
 
   # Present UI to edit the value corresponding to identifier. The corresponding derp var determines what kind of UI is available (menu, direct entry, etc).
-  def edit_value(identifier)
-    identifier = identifier.to_sym # the Dynamic Language Tax...
+  def edit_value(identifier, user_inputs: [])
 
-    puts ''
-    puts "  EDIT VALUE: #{ identifier }"
-    puts ''
+    identifier = identifier.to_sym # ugh, the Dynamic Language Tax...
 
-    dv = value_definition identifier
+    inputs = FakeInput.new user_inputs
 
-    if dv.predefined_values_for_edit_menu
-      puts '  [1-9]: Select new value from list'
-    end
+    begin_section "EDIT VALUE: #{identifier}"
 
-    unless dv.enforce
-      puts '      I: Input new value directly'
-    end
 
-    first_answer = ask ""
+    derp_var      = value_definition identifier
+    predefined    = derp_var.predefined_values_for_edit_menu || []
+    current_value = self[identifier]
+    new_value     = 'error!!'
+    other_values  = predefined.select {|e| e!= current_value}
+    menu          = {}
 
-    if first_answer.downcase == 'i'
-      ENV.each { |k,v|  puts "#{k}: #{v}"}
+    has_other_predefined_values = other_values.count > 0
+    can_accept_manual_input = !derp_var.enforce
+    can_be_edited = has_other_predefined_values || can_accept_manual_input
+
+    if ! can_be_edited
+      print "\nDerrrp! can't edit #{identifier}: it is configured with only 1 valid value (#{current_value})"
     else
-      abort 'not implemented BRUO'
+      if has_other_predefined_values
+
+
+        derp_var.predefined_values_for_edit_menu.each_with_index do |value, index|
+          num = index + 1
+          menu["#{num}"] = "#{value}"
+        end
+
+        unless derp_var.enforce
+          menu['i'] = 'Input new value directly'
+        end
+
+      end
+
+      print ""
+
+      has_menu = has_other_predefined_values
+
+      if has_menu
+        print_menu(menu)
+        print ''
+        print "Choose from menu, or press ↩︎ to accept current value: #{current_value}", terminator: nil
+      else
+        print "Enter new value, or press ↩︎ to accept current value: #{current_value}", terminator: nil
+      end
+
+      answer = ask "", inputs: inputs
+
+      if answer == '' && derp_var.allow_empty_string == false
+        answer = nil
+      end
+
+      print ''
+
+      if ! has_menu
+        new_value = answer
+
+      else
+
+        until answer == '' || menu.keys.include?(answer)
+          print "Invalid answer. Please try again:"
+          answer = ask "", inputs: inputs
+        end
+
+        if answer ==  ''
+          print "　Value of #{identifier} not changed: #{current_value}"
+          new_value = current_value
+
+        elsif answer == 'i'
+          print "Direct edit mode. Please input the new value:"
+          new_value = ask ''
+
+        else
+
+          new_value = menu[answer]
+          print "Value of #{identifier} changed to: #{new_value}"
+
+        end
+
+      end
     end
 
-  end
+    end_section
 
-
-  def select_value_from_list(setting_name, valid_values)
-    setting_name = setting_name.to_sym
-    puts "\nSelect the new value for #{setting_name}:"
-
-    answers = []
-    valid_values.each_with_index do |value, index|
-      num = index + 1
-      puts "[#{num}] #{value}"
-      answers << "#{num}"
-    end
-    answers << ''
-
-    answer = ask "\n[Enter/Return] accept current value: #{ active_values[setting_name] }"
-
-    if answer == ''
-      active_settings[setting_name]
-    elsif answers.include? answer
-      index = answer.to_i - 1
-      valid_values[index]
-    else
-      puts "Sorry, #{answer} is not a valid selection. Please try again."
-      select_value_from_list setting_name, valid_values
-    end
+    new_value
   end
 
 
@@ -170,28 +232,53 @@ class Derployer
 
 
   def confirm_settings(error_message=nil)
+
+    begin_section "READY TO DEPLOY WITH THESE SETTINGS:"
+
     if error_message
-      putz ''
-      putz error_message
+      print ''
+      print error_message
     end
 
-    putz ""
-    putz "READY TO DEPLOY WITH THESE SETTINGS:"
-    putz ""
+    menu = {}
 
-    i = 1
-    active_values.each do |k, v|
-      putz "[#{i.to_s}] #{k}: #{v}"
-      i += 1
+    active_values.each_with_index do |(k, v), i|
+      menu_choice = (i + 1).to_s
+      print "[#{menu_choice}] #{k}: #{v}"
+
+      menu[menu_choice] = k
+
     end
-    putz ""
+
+    print ""
 
     answer = ask "Enter an item number to change, or Return to continue: "
 
+    until answer == '' || menu.keys.include?(answer)
+      print "YOU ARE AN INVALID PERSON"
+      answer = ask "", inputs: inputs
+    end
+
     if answer != ''
-      putz ""
-      change_setting answer
+      # hold on, the user wants to edit something...
+      change_setting menu[answer]
     end
   end
+
+
+  def change_setting(identifier)
+
+    new_value = edit_value identifier
+
+    if validate_user_input(identifier, new_value)
+      override identifier, new_value
+    else
+      error_message = "WARNING: '#{new_setting}' is not an acceptable value for #{setting_name}; settings were not changed."
+    end
+    confirm_settings error_message
+  end
+
+
+
 
 end

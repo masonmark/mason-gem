@@ -38,7 +38,6 @@ require 'mason'
 
 ∂.define deploy_application:  'yes'
 ∂.define deploy_git_revision: 'master'
-∂.define machine_type:        'generic'
 ∂.define override_ssh_key:    '~/id_rsa'
 ∂.define server_type:         'production'
 ∂.define sysadmin_username:  'centos'

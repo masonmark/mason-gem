@@ -11,7 +11,9 @@ require 'yaml'
 class Derployer
 
 
-  def initialize(name = nil)
+  def initialize(name = nil, print_block: nil)
+
+    @print_block = print_block # if non-nil
 
     @name = name
 
@@ -60,6 +62,7 @@ class Derployer
     greet_user
     process_args
     confirm_settings
+      # this will loop between confirm_settings <-> change_settings until user is done editing
 
     path_to_private_key    = write_ssh_key_to_temp_file
     path_to_inventory_file = write_ansible_inventory_file
