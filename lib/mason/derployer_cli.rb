@@ -102,8 +102,6 @@ class Derployer
         print "Initializing with default settings."
       end
     end
-
-    end_section
   end
 
 
@@ -114,10 +112,6 @@ class Derployer
     content += '=' * needed unless needed < 1
 
     print section_top + content
-  end
-
-  def end_section
-    # print section_bottom
   end
 
 
@@ -157,10 +151,12 @@ class Derployer
     begin_section "EDIT VALUE: #{identifier}"
 
     if ! can_be_edited
+    
       print "\nDerrrp! can't edit #{identifier}: it is configured with only 1 valid value (#{current_value})"
+    
     else
+      
       if has_other_predefined_values
-
 
         derp_var.predefined_values.each_with_index do |value, index|
           num = index + 1
@@ -170,7 +166,6 @@ class Derployer
         unless derp_var.enforce
           menu['i'] = 'Input new value directly'
         end
-
       end
 
       print ""
@@ -187,41 +182,34 @@ class Derployer
 
       answer = ask "", inputs: inputs
 
-      if answer == '' && derp_var.allow_empty_string == false
-        answer = nil
-      end
-
       print ''
 
-      if ! has_menu
-        new_value = answer
-
-      else
+      if has_menu
 
         until answer == '' || menu.keys.include?(answer)
-          print "Invalid answer. Please try again:"
+          print "Invalid answer (#{answer}). Please try again:"
           answer = ask "", inputs: inputs
         end
 
         if answer ==  ''
           print "　Value of #{identifier} not changed: #{current_value}"
-          new_value = current_value
+          answer = current_value
 
         elsif answer == 'i'
-          print "Direct edit mode. Please input the new value:"
-          new_value = ask ''
+          print "Enter new value, or press ↩︎ to accept current value: #{current_value}", terminator: nil
+          answer = ask '', inputs: inputs
 
         else
-
-          new_value = menu[answer]
-          print "Value of #{identifier} changed to: #{new_value}"
-
+          answer = menu[answer]
         end
-
       end
     end
 
-    end_section
+    new_value = answer
+
+    if new_value == '' && derp_var.allow_empty_string == false
+      new_value = nil
+    end
 
     new_value
   end
@@ -258,7 +246,7 @@ class Derployer
 
     until answer == '' || menu.keys.include?(answer)
       print "YOU ARE AN INVALID PERSON"
-      answer = ask "", inputs: inputs
+      answer = ask ""
     end
 
     if answer != ''
@@ -268,15 +256,22 @@ class Derployer
   end
 
 
-  def change_setting(identifier)
+  def change_setting(identifier, user_inputs: [])
 
-    new_value = edit_value identifier
+    new_value = edit_value identifier, user_inputs: user_inputs
 
-    if validate_user_input(identifier, new_value)
-      override identifier, new_value
-    else
-      error_message = "WARNING: '#{new_setting}' is not an acceptable value for #{setting_name}; settings were not changed."
+    if new_value != nil
+
+      if validate_user_input(identifier, new_value)
+        override identifier, new_value
+        print "Value of #{identifier} changed to: #{new_value}"
+      else
+        error_message = "WARNING: '#{new_setting}' is not an acceptable value for #{setting_name}; settings were not changed."
+      end
     end
+
+    return if user_inputs.count > 0 # because that means test mode
+
     confirm_settings error_message
   end
 

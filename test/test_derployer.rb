@@ -98,16 +98,50 @@ class DerployerTests < Minitest::Test
   end
 
 
-  def test_effect_of_edit_value
+  def test_change_setting
+    
+    d = @derp
+    d.define foo: ['bar']
+
+    d.change_setting :foo, user_inputs: ['baz']
+    assert_equal 'baz', d[:foo]
+
+    # Now we have changed the value, so on next edit the menu should appear. Pressing Return should mean this returns nil (the effect of which is to keep the current value):
+    actual = d.change_setting :foo, user_inputs: ['']
+    assert_equal 'baz', d[:foo]
+
+    # choose things from menu:
+    d.define whut: ['whut', 'in', 'the']
+    d.change_setting :whut, user_inputs: [3]
+    assert_equal 'the', d[:whut]
+
+    d.change_setting :whut, user_inputs: [2]
+    assert_equal 'in', d[:whut]
+
+    d.change_setting :whut, user_inputs: ['']
+    assert_equal 'in', d[:whut]
+
+    # use 'i' to input directly, but then just hit Return to accept current value:
+    d.change_setting :whut, user_inputs: ['i', '']
+    assert_equal 'in', d[:whut]
+
+    # do again but this time enter something
+    d.change_setting :whut, user_inputs: ['i', 'snausages', '']
+    assert_equal 'snausages', d[:whut]
+
+  end
+
+
+  def test_edit_value
 
     d = @derp
     d.define foo: ['bar']
     actual = d.edit_value :foo, user_inputs: ['baz']
     assert_equal 'baz', actual
 
-    # Now we have changed the value, so on next edit the menu should appear. Pressing Return should accept current value:
+    # Now we have changed the value, so on next edit the menu should appear. Pressing Return should mean this returns nil (the effect of which is to keep the current value):
     actual = d.edit_value :foo, user_inputs: ['']
-    assert_equal 'baz', actual
+    assert_nil actual
 
     # choose things from menu:
     d.define whut: ['whut', 'in', 'the']
@@ -118,11 +152,12 @@ class DerployerTests < Minitest::Test
     assert_equal 'in', actual
 
     actual = d.edit_value :whut, user_inputs: ['']
-    assert_equal 'in', actual
+    assert_equal 'whut', actual
+      # NOTE: that seems counter-intuitive, but it is correct because edit_value doesn't modify state, so the value was not actually changed to 'in' above -- 'in' was the return value of edit_value but then it was discarded
 
     # use 'i' to input directly, but then just hit Return to accept current value:
     actual = d.edit_value :whut, user_inputs: ['i', '']
-    assert_equal 'in', actual
+    assert_equal nil, actual
 
     # do again but this time enter something
     actual = d.edit_value :whut, user_inputs: ['i', 'snausages', '']
@@ -166,11 +201,9 @@ class DerployerTests < Minitest::Test
       Choose from menu, or press ↩︎ to accept current value: generic
       > 2
 
-      Value of machine_type changed to: vmware-fusion
     OUTPUT
 
     assert_equal expected, @output
-
   end
 
 
