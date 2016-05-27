@@ -187,17 +187,18 @@ class Derployer
       if has_menu
 
         until answer == '' || menu.keys.include?(answer)
-          print "Invalid answer (#{answer}). Please try again:"
+          print "Invalid answer (#{answer}). Please try again:", terminator: nil
           answer = ask "", inputs: inputs
+          print ''
         end
 
         if answer ==  ''
-          print "　Value of #{identifier} not changed: #{current_value}"
-          answer = current_value
+          answer = nil
 
         elsif answer == 'i'
           print "Enter new value, or press ↩︎ to accept current value: #{current_value}", terminator: nil
           answer = ask '', inputs: inputs
+          print ''
 
         else
           answer = menu[answer]
@@ -260,19 +261,24 @@ class Derployer
 
     new_value = edit_value identifier, user_inputs: user_inputs
 
-    if new_value != nil
+    if new_value.nil?
+
+      print "Value of #{identifier} was not changed. It remains: #{self[identifier]}"
+
+    else
 
       if validate_user_input(identifier, new_value)
         override identifier, new_value
         print "Value of #{identifier} changed to: #{new_value}"
       else
-        error_message = "WARNING: '#{new_setting}' is not an acceptable value for #{setting_name}; settings were not changed."
+        #error_message = "WARNING: '#{new_setting}' is not an acceptable value for #{setting_name}; settings were not changed."
+        print "WARNING: '#{new_setting}' is not an acceptable value for #{setting_name}; settings were not changed."
       end
     end
 
     return if user_inputs.count > 0 # because that means test mode
 
-    confirm_settings error_message
+    confirm_settings
   end
 
 

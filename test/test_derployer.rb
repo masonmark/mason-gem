@@ -151,10 +151,6 @@ class DerployerTests < Minitest::Test
     actual = d.edit_value :whut, user_inputs: [2]
     assert_equal 'in', actual
 
-    actual = d.edit_value :whut, user_inputs: ['']
-    assert_equal 'whut', actual
-      # NOTE: that seems counter-intuitive, but it is correct because edit_value doesn't modify state, so the value was not actually changed to 'in' above -- 'in' was the return value of edit_value but then it was discarded
-
     # use 'i' to input directly, but then just hit Return to accept current value:
     actual = d.edit_value :whut, user_inputs: ['i', '']
     assert_equal nil, actual
@@ -162,7 +158,6 @@ class DerployerTests < Minitest::Test
     # do again but this time enter something
     actual = d.edit_value :whut, user_inputs: ['i', 'snausages', '']
     assert_equal 'snausages', actual
-
   end
 
 
