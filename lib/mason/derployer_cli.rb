@@ -133,26 +133,28 @@ class Derployer
   end
 
 
-  # Present UI to edit the value corresponding to identifier. The corresponding derp var determines what kind of UI is available (menu, direct entry, etc).
   def edit_value(identifier, user_inputs: [])
+    # Present UI to edit the value corresponding to identifier, and return the resulting value. (No side effects.) 
+    # The corresponding derp var determines what kind of UI is available (menu, direct entry, etc).
+    #
+    # identifier - string or symbol identifying the derp var to be edited
+    # inputs - for testing, allows passing fake user input ('' means Return key without any text entry) to prevent interaction
 
-    identifier = identifier.to_sym # ugh, the Dynamic Language Tax...
-
-    inputs = FakeInput.new user_inputs
-
-    begin_section "EDIT VALUE: #{identifier}"
-
+    identifier    = identifier.to_sym
+    inputs        = FakeInput.new user_inputs
 
     derp_var      = value_definition identifier
-    predefined    = derp_var.predefined_values_for_edit_menu || []
+    predefined    = derp_var.predefined_values || []
     current_value = self[identifier]
     new_value     = 'error!!'
     other_values  = predefined.select {|e| e!= current_value}
     menu          = {}
 
     has_other_predefined_values = other_values.count > 0
-    can_accept_manual_input = !derp_var.enforce
-    can_be_edited = has_other_predefined_values || can_accept_manual_input
+    can_accept_manual_input     = !derp_var.enforce
+    can_be_edited               = has_other_predefined_values || can_accept_manual_input
+
+    begin_section "EDIT VALUE: #{identifier}"
 
     if ! can_be_edited
       print "\nDerrrp! can't edit #{identifier}: it is configured with only 1 valid value (#{current_value})"
@@ -160,7 +162,7 @@ class Derployer
       if has_other_predefined_values
 
 
-        derp_var.predefined_values_for_edit_menu.each_with_index do |value, index|
+        derp_var.predefined_values.each_with_index do |value, index|
           num = index + 1
           menu["#{num}"] = "#{value}"
         end

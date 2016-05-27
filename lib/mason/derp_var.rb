@@ -1,26 +1,22 @@
 class DerpVar
 
-  attr_reader :identifier, :allowed_values, :enforce
+  attr_reader :identifier, :predefined_values, :enforce, :allow_empty_string
 
-  def initialize(identifier:, allowed_values:, info: nil, enforce: false)
-    @identifier     = identifier
-    @allowed_values = allowed_values
-    @info           = info
-    @enforce        = enforce
-
+  def initialize(identifier:, predefined_values:, info: nil, enforce: false, allow_empty_string: false)
+    @identifier         = identifier
+    @predefined_values  = predefined_values
+    @info               = info
+    @enforce            = enforce
+    @allow_empty_string = allow_empty_string
   end
 
   def default
-    allowed_values[0]
+    predefined_values[0]
   end
 
 
   def validate(value)
-    enforce == false || allowed_values.nil? || allowed_values.include?(value)
-  end
-
-  def predefined_values_for_edit_menu
-    return @allowed_values
+    enforce == false || predefined_values.nil? || predefined_values.include?(value)
   end
 
 end

@@ -7,11 +7,11 @@ class Derployer
     # ordered hash FTW
     identifier = dict.keys[0]
 
-    allowed_values = dict.values[0]
-    allowed_values = [allowed_values] unless allowed_values.is_a? Array
+    predefined_values = dict.values[0]
+    predefined_values = [predefined_values] unless predefined_values.is_a? Array
 
     dv = DerpVar.new identifier: identifier,
-                     allowed_values: allowed_values,
+                     predefined_values: predefined_values,
                      info: dict[:info],
                      enforce: dict[:enforce] == true
 
@@ -46,7 +46,7 @@ class Derployer
 
 
   def valid_values_for(identifier)
-    value_definition(identifier).allowed_values
+    value_definition(identifier).predefined_values
   end
 
 
