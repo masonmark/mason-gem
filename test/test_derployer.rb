@@ -133,13 +133,12 @@ class DerployerTests < Minitest::Test
 
 
   def test_edit_value
-
+    # When this test case was first written, edit_value changed state. Now it doesn't so this test is less meaningful (but not totally worthless, so it's still here.)
     d = @derp
     d.define foo: ['bar']
     actual = d.edit_value :foo, user_inputs: ['baz']
     assert_equal 'baz', actual
 
-    # Now we have changed the value, so on next edit the menu should appear. Pressing Return should mean this returns nil (the effect of which is to keep the current value):
     actual = d.edit_value :foo, user_inputs: ['']
     assert_nil actual
 

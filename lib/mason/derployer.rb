@@ -34,8 +34,8 @@ class Derployer
     @tempfile_hospital = []
       # keeps tempfile instances from deallocing when var goes out of scope
 
-
   end
+
 
   # Returns the name of the Deployer instance, e.g. "deploy-rollerball". Returns "generic" if no name is set.
   def name
@@ -56,9 +56,9 @@ class Derployer
   end
 
 
+  # The run() method is the main work method for a Derployer-based command-line tool.
 
   def run
-
     greet_user
     process_args
     confirm_settings
@@ -92,6 +92,7 @@ class Derployer
       die "y u no give run block!!!"
     end
   end
+
 
   def sysadmin_username
     return self[:sysadmin_username]

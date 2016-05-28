@@ -19,36 +19,35 @@ class Derployer
   end
 
 
+  # Returns the derp var the defines the constraints for the value identified by identifier.
   def value_definition(identifier)
     @value_definitions[identifier]
   end
 
 
+  # Sets the currently active value list to the one identified by identifier.
   def activate_value_list(identifier)
     @active_value_list_identifier = identifier
   end
 
-  # Returns the "active value list", e.g. 'production' or 'staging'. NOTE: This list is the middle tier of values and there may be overrides that have precedence over the values in this list. User active_values() get the currently-active values of each derp var.
+  # Returns the "active value list", e.g. 'production' or 'staging'. NOTE: This list is the middle tier of values, and there may be overrides that have precedence over the values in this list. Use active_values() get the currently-active values of each derp var.
   def active_value_list
     @value_lists[@active_value_list_identifier]
   end
 
 
-  #FIXME: rename?
+  # Register a value list with a name. A value list is just a dictionary of identifiers (symbols) mapped to values (strings).
   def define_value_list(identifier_sym, values = {})
     @value_lists[identifier_sym] = values
   end
 
-
+  # Override the value associated with identifier. This is used when the user specifies a value for a derp var, and the override value has the highest precedences, so it will override the value for identifier in the currently active value list (if any) and the default value (if any).
   def override(identifier, value)
     @value_overrides[identifier] = value
   end
 
 
-  def valid_values_for(identifier)
-    value_definition(identifier).predefined_values
-  end
-
+  def initialize_
 
   # def valid_settings_values
   #
