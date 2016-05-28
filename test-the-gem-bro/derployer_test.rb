@@ -58,11 +58,12 @@ require 'mason'
 }
 
 
-∂.run {
+∂.run()
 
-  puts "THE END BRO!"
-
-  ∂.ask 'derp?'
-}
+# ∂.run {
+#
+#   puts "THE END BRO!"
+#
+# }
 
 

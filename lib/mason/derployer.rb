@@ -13,9 +13,11 @@ class Derployer
 
   def initialize(name = nil, print_block: nil)
 
-    @print_block = print_block # if non-nil
+    @print_block = print_block
+      # if non-nil, this will be used to print
 
     @name = name
+      # names should be unique, e.g. 'deploy-mycoolapp'
 
     @active_value_list_identifier = nil
       # Only one value list can be "active".
@@ -43,8 +45,7 @@ class Derployer
   end
 
 
-
-  # Returns a Pathname
+  # Returns the path to the dir containing the script (as a Pathname)
   def path_to_root
     path_to_script = Pathname.new(File.expand_path $PROGRAM_NAME)
     path_to_parent = path_to_script.parent
@@ -71,7 +72,8 @@ class Derployer
 
     playbook   = self[:ansible_playbook]
 
-    extra_vars = [:sysadmin_username, :server_type, :deploy_git_revision, :default_rails_env, :machine_type]
+    # extra_vars = [:sysadmin_username, :server_type, :deploy_git_revision, :default_rails_env, :machine_type]
+    extra_vars = @value_definitions.keys
 
     cmd = build_ansible_command inventory: path_to_inventory_file,
                            playbook: playbook,
@@ -80,16 +82,16 @@ class Derployer
 
     settings_write
 
-    putz "\nATTEMPTING TO DEPLOY VIA ANSIBLE AS FOLLOWS:\n"
-
-    puts cmd
+    begin_section("ATTEMPTING TO DEPLOY VIA ANSIBLE")
+    print ''
+    print cmd
 
     Kernel.system cmd
 
     if block_given?
       yield
     else
-      die "y u no give run block!!!"
+      # supplying a run block isn't required anymore; it can be useful with just default behavior
     end
   end
 
@@ -104,11 +106,7 @@ class Derployer
   end
 
 
-
-  #
-  # ANSIBLE
-  #
-
+  ######################### ANSIBLE #########################
 
   # Decrypt file with ansible vault and return contents (prompts user for password if necessary).
   def ansible_vault_read(path_to_encrypted_file, name: 'encrypted resource', password: nil)
@@ -172,7 +170,7 @@ class Derployer
      }
      extra_vars_str += '"'
 
-     username = self[:sysadmin_user_name]
+     username = self[:sysadmin_username]
      playbook = self[:ansible_playbook]
 
     [
@@ -189,11 +187,7 @@ class Derployer
 
 
 
-  #
-  # CLI
-  #
-
-
+  ######################### CLI #########################
 
   # Invokes the print_block, if one was supplied during initialization, otherwise just calls Kernel.print().
   def print(what, terminator: "\n")
@@ -241,10 +235,6 @@ class Derployer
      ].join("\n")
   end
 
-  def putz(obj, prefix = "📦  ")
-    puts "#{ prefix }#{ obj }"
-  end
-
 
   # Show introductory text.
   def greet_user
@@ -290,7 +280,6 @@ class Derployer
 
         #@active_settings.merge! previous_settings
         print "FIXME: NOT REIMPLEMENTED YET BRO"
-
 
       else
         print "Initializing with default settings."
@@ -476,9 +465,7 @@ class Derployer
   end
 
 
-  #
-  # I/O
-  #
+  ######################### I/O #########################
 
   # Returns the settings path, which is partially based on the name, so if each deploy tool using this library uses a unique name, they don't clobber each other.
   def settings_path
@@ -545,9 +532,7 @@ class Derployer
   end
 
 
-  #
-  # VALUES
-  #
+  ######################### VALUES #########################
 
   # Define a new deploy value. Conceptually, a deploy value is a value (currently only strings supported) with a unique name (expressed as a ruby symbol). For convenience, they define a bunch of metadata also, e.g. allowed values, info/help text, etc.
   def define(dict)
@@ -598,22 +583,6 @@ class Derployer
   end
 
 
-
-  # def valid_settings_values
-  #
-  #   #FIXME: make these registerable
-  #
-  #   {
-  #       ansible_playbook:    ['ansible/site.yml', 'ansible/test-playbook.yml'],
-  #       default_rails_env:   ['production', 'development'],
-  #       deploy_application:  ['yes', 'no'],
-  #       deploy_git_revision: ['master', 'none'],
-  #       machine_type:        ['generic', 'vmware-fusion'], # because, there are several vmware-specific hacks we need to do.
-  #       server_type:         ['development', 'staging', 'production'], # the intended purpose of the server (controls rails env, credentials)
-  #   }
-  # end
-
-
   # Return the active value for each derp var. The precedence is: 1. value overrides, 2. active value list, 3. derp var default value
   def active_values
 
@@ -625,6 +594,7 @@ class Derployer
     result
   end
 
+  # Returns the active value associated with a derp var.
   def [](identifier)
 
     value_definition =  @value_definitions[identifier]
@@ -635,9 +605,5 @@ class Derployer
 
     return override_vlist[identifier] || active_vlist[identifier] || value_definition.default
   end
-
-
-
-
 
 end
