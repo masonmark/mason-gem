@@ -215,4 +215,63 @@ class DerployerTests < Minitest::Test
     assert_equal expected, output
   end
 
+
+  def test_read_settings
+    old = Derployer.new('test_read_settings-bro')
+    new = Derployer.new('test_read_settings-bro')
+
+    old.define foo: 'bar'
+    old.define bar: 'baz'
+    old.define baz: 'whut'
+
+    old.settings_write
+
+    expected = {foo: 'bar', bar: 'baz', baz: 'whut'}
+    actual   = old.settings_read
+    assert_equal expected, actual
+
+
+    old.override :foo, 'override1'
+    old.override :bar, 'override2'
+    old.override :baz, 'override3'
+
+    old.settings_write
+
+    expected = {foo: 'override1', bar: 'override2', baz: 'override3'}
+    actual   = old.settings_read
+    assert_equal expected, actual
+
+    # Finally, test that a newer derployer reading settings that no longer apply filters them out:
+
+    new.define bar: 'baz'
+    new.define baz: 'whut'
+    new.define ass: 'hat'
+
+    expected = {bar: 'override2', baz: 'override3'} # no more foo
+    actual   = new.settings_read
+    assert_equal expected, actual
+  end
+
+  def test_read_write_named_settings
+    d = @derp
+
+    d.define foo: ['bar', 'baz']
+    d.define ass: 'hat'
+
+    d.settings_write name: 'production'
+
+    d.override :foo, 'snausages'
+
+    d.settings_write name: 'dev-vm-at-my-house'
+
+    expected = {foo: 'bar', ass: 'hat'}
+    actual   = d.settings_read name: 'production'
+    assert_equal expected, actual
+
+    expected = {foo: 'snausages', ass: 'hat'}
+    actual   = d.settings_read name: 'dev-vm-at-my-house'
+    assert_equal expected, actual
+
+  end
+
 end

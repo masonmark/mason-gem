@@ -266,7 +266,7 @@ class Derployer
     vlist_identifiers = @value_lists.keys
     settings_names_from_args = vlist_identifiers.select { |identifier| ARGV.include? identifier.to_s }
     name_of_settings_to_load = settings_names_from_args.last
-      # kludge: since we dont parse opts for real (yet), just use last valid value:
+      # kludge: since we dont parse opts for real (yet), just use last valid value
 
     if ARGV.include? name_of_settings_to_load
 
@@ -278,8 +278,10 @@ class Derployer
       if previous_settings.count > 0
         print "Initializing with last-used settings."
 
-        #@active_settings.merge! previous_settings
-        print "FIXME: NOT REIMPLEMENTED YET BRO"
+        previous_settings.each { |k,v|
+          self.override k, v
+        }
+
 
       else
         print "Initializing with default settings."
@@ -467,19 +469,19 @@ class Derployer
 
   ######################### I/O #########################
 
-  # Returns the settings path, which is partially based on the name, so if each deploy tool using this library uses a unique name, they don't clobber each other.
-  def settings_path
-    File.expand_path('~/.derployer-#{ name }.settings')
+  # Returns the settings path, which is partially based on the name, so if each deploy tool using this library uses a unique name, they don't clobber each other. Also, saved_settings_name allows saving an arbitary number of named lists of values.
+  def settings_path(saved_settings_name = nil)
+    name_segment = saved_settings_name ? "#{saved_settings_name}." : ""
+    File.expand_path("~/.derployer-#{ name }.#{ name_segment }settings")
   end
 
 
-  # Read the stored settings.
-  #   FIXME: make this able to save named sets of settings
-  #   FIXME: and maybe nuke or at leat filter our old obsolete settings.
-  def settings_read
+  # Read the stored settings. A name value of nil means the read the default settings; any other value means read the settings stored under that name.
+  def settings_read(name: nil)
+
     result = {}
     begin
-      file_contents = IO.read settings_path
+      file_contents = IO.read settings_path(name)
       old_settings  = YAML.load file_contents
       if old_settings.class == Hash
         result = old_settings
@@ -487,13 +489,15 @@ class Derployer
     rescue
       result = {}
     end
+
+    result.select! {|k,v| value_definition(k) != nil }
     result
   end
 
 
-  # Save settings.
-  def settings_write(settings_hash = active_values)
-    File.open settings_path, 'w' do |f|
+  # Save settings. Supply a name value to save the settings as a distinct named list (and not interfere with default settings).
+  def settings_write(settings_hash = active_values, name: nil)
+    File.open settings_path(name), 'w' do |f|
       f.write settings_hash.to_yaml
     end
   end
