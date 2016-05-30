@@ -320,7 +320,7 @@ class Derployer
     # inputs - for testing, allows passing fake user input ('' means Return key without any text entry) to prevent interaction
 
     identifier    = identifier.to_sym
-    inputs        = FakeInput.new user_inputs
+    inputs        = Mason::FakeInput.new user_inputs
 
     derp_var      = value_definition identifier
     predefined    = derp_var.predefined_values || []

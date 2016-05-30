@@ -5,7 +5,7 @@ require 'mason'
 class FakeInputTests < Minitest::Test
 
   def setup
-    @fi = FakeInput.new ['a', 'x', 'fubro', '', '3', 8, :asshat, :Q]
+    @fi = Mason::FakeInput.new ['a', 'x', 'fubro', '', '3', 8, :asshat, :Q]
   end
 
 
