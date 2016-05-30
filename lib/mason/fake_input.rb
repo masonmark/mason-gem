@@ -1,8 +1,7 @@
-# Internal class, for making CLI interactions testable.
-
 module Mason
 
   class FakeInput
+    # Internal class, for making CLI interactions testable.
 
     def initialize(inputs = [])
       # The inputs param should be array of strings. '' means 'user just pressed Return '

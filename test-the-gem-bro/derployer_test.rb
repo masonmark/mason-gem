@@ -20,7 +20,7 @@ end
 
 require 'mason'
 
-∂ = Derployer.new()
+∂ = Mason::Derployer.new()
 
 # Define some deploy settings.
 

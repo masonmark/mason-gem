@@ -2,6 +2,7 @@ require 'minitest/autorun'
 require 'mason'
 require 'pathname'
 
+module Mason
 
 class DerployerTests < Minitest::Test
 
@@ -275,3 +276,5 @@ class DerployerTests < Minitest::Test
   end
 
 end
+
+  end
