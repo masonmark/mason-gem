@@ -1,7 +1,7 @@
 PATH
   remote: ../
   specs:
-    mason (0.0.2)
+    mason (0.0.3)
 
 GEM
   specs:
@@ -11,3 +11,6 @@ PLATFORMS
 
 DEPENDENCIES
   mason!
+
+BUNDLED WITH
+   1.11.2

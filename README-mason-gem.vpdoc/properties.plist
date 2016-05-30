@@ -15,7 +15,7 @@
 	<key>defaultUUID</key>
 	<string>4980bce0-8942-4a26-bcdd-984f3a82bf2b</string>
 	<key>expectedPageCount</key>
-	<integer>11</integer>
+	<integer>12</integer>
 	<key>lastPDFExportPagePresetName</key>
 	<string>iso-a4</string>
 	<key>lastWebExportOutputURLData</key>
@@ -47,26 +47,26 @@
 	<array>
 		<dict>
 			<key>displayUUID</key>
-			<string>4980bce0-8942-4a26-bcdd-984f3a82bf2b</string>
+			<string>61c6c772-bc30-49e0-89fd-1529169453dd</string>
 			<key>drawerOpen</key>
 			<false/>
 			<key>openUUIDProperties</key>
 			<array>
 				<dict>
 					<key>itemUUID</key>
-					<string>4980bce0-8942-4a26-bcdd-984f3a82bf2b</string>
+					<string>61c6c772-bc30-49e0-89fd-1529169453dd</string>
 					<key>rulerVisible</key>
-					<true/>
+					<false/>
 					<key>selectedRange</key>
-					<string>{781, 0}</string>
+					<string>{194, 0}</string>
 					<key>visibleGlyphs</key>
-					<string>{0, 781}</string>
+					<string>{0, 203}</string>
 					<key>zoomScale</key>
 					<real>1</real>
 				</dict>
 			</array>
 			<key>windowFrame</key>
-			<string>{{197, 58}, {1591, 1359}}</string>
+			<string>{{1362, 148}, {709, 1081}}</string>
 		</dict>
 	</array>
 	<key>skIndexVersion</key>

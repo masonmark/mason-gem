@@ -11,4 +11,8 @@ puts "Will it boogie?"
 foo.boogie
 
 bar = Mason::CommandWrapper.new
+bar.command = 'ls -laR /usr/local/bin'
 bar.run
+
+puts "bar: #{bar}"
+puts "bar.stdout: #{bar.stdout}"

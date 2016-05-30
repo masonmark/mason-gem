@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'mason/command_wrapper'
 
-class CommandWrapperTests < MiniTest::Unit::TestCase
+class CommandWrapperTests < Minitest::Test
   # mason 2016-01-23: bringing the first bit of my standard ruby code under one roof...
   # mason 2011-08-05 fucking around porting ancient python stuff
 
@@ -13,28 +13,28 @@ class CommandWrapperTests < MiniTest::Unit::TestCase
 
   def test_instantiation_without_command
     # A wrapper should have no command by default, and trying to run it should raise.
-    
+
     assert_nil @instance.command
     assert_raises(Mason::CommandWrapper::InvalidCommandError) {@instance.run}
   end
-  
-  
+
+
   def test_stdout
     @instance = @class.new 'echo "おはようございます"'
     @instance.run
-    
+
     assert @instance.stdout.include? "おはよう"
-    assert_equal 0, @instance.exit_status    
+    assert_equal 0, @instance.exit_status
   end
-  
-  
+
+
   def test_stderr
     @instance = @class.new 'ls /bonkGRONKdonkDONK~~NONEXISTENT'
     @instance.raise_on_bad_exit = false
     @instance.run
-    
+
     assert @instance.stderr.include? "ls:" # because any message might be localized
-    refute_equal 0, @instance.exit_status    
+    refute_equal 0, @instance.exit_status
   end
 
 
@@ -43,7 +43,7 @@ class CommandWrapperTests < MiniTest::Unit::TestCase
     @instance.run
 
     assert_equal 0, @instance.exit_status
-    assert @instance.stdout.include? "drwx" 
+    assert @instance.stdout.include? "drwx"
       # surely this will be there on any system we might use?
     assert @instance.stderr == ""
     assert @instance.exit_status == 0
@@ -52,7 +52,7 @@ class CommandWrapperTests < MiniTest::Unit::TestCase
 
   def test_working_dir_is_picked_up_at_instantiate_time
     assert_equal @instance.working_directory, Dir.pwd
-    
+
     Dir.chdir("/Users")
     @instance = Mason::CommandWrapper.new
     assert_equal @instance.working_directory, "/Users"
@@ -85,7 +85,7 @@ class CommandWrapperTests < MiniTest::Unit::TestCase
     @instance = @class.new 'ls -la'
     @instance.run
     assert_equal 0, @instance.exit_status
-    
+
     @instance = @class.new('ls -la /dshjkflashdfklahfhsadjkfhlasdhfhasdlhfu')
 
     @instance.run
@@ -109,5 +109,5 @@ class CommandWrapperTests < MiniTest::Unit::TestCase
     assert x.stderr != ""
 
   end
-  
+
 end
