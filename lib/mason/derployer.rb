@@ -445,19 +445,34 @@ module Mason
 
       print ""
 
-      answer = ask "Enter an item number to change, or Return to continue: "
+      answer = ask "Enter an item number to change, [s] to save this set of values, or Return to continue: "
 
-      until answer == '' || menu.keys.include?(answer)
-        print "YOU ARE AN INVALID PERSON"
+      until answer == '' || answer.downcase == 's' || menu.keys.include?(answer)
+        print "Invalid answer (#{answer}), please try again."
         answer = ask ""
       end
 
-      if answer != ''
-        # hold on, the user wants to edit something...
+      # either method below will call confirm_settings again when done:
+
+      if answer.downcase == 's'
+        save_settings_with_name
+      elsif answer != ''
         change_setting menu[answer]
       end
     end
 
+
+    def save_settings_with_name
+      list_name = ask "Enter name:"
+      if list_name == ''
+        print "Save canceled because no name was supplied."
+      else
+        settings_write name: list_name
+        print "Value list saved with name '#{list_name}'."
+      end
+
+      confirm_settings
+    end
 
     def change_setting(identifier, user_inputs: [])
 
