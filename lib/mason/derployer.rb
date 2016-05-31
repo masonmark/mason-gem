@@ -66,6 +66,8 @@ module Mason
       confirm_settings
         # this will loop between confirm_settings <-> change_settings until user is done editing
 
+      settings_write
+
       path_to_private_key    = write_ssh_key_to_temp_file
       path_to_inventory_file = write_ansible_inventory_file
 
@@ -81,7 +83,6 @@ module Mason
                            extra_vars: extra_vars,
                               ssh_key: path_to_private_key
 
-      settings_write
 
       begin_section("ATTEMPTING TO DEPLOY VIA ANSIBLE")
       print ''
