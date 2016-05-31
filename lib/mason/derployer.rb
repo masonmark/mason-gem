@@ -78,15 +78,20 @@ module Mason
       # extra_vars = [:sysadmin_username, :server_type, :deploy_git_revision, :default_rails_env, :machine_type]
       extra_vars = @value_definitions.keys
 
+      begin_section("ATTEMPTING TO DEPLOY VIA ANSIBLE")
+      print ''
+
       cmd = build_ansible_command inventory: path_to_inventory_file,
                              playbook: playbook,
                            extra_vars: extra_vars,
                               ssh_key: path_to_private_key
 
 
-      begin_section("ATTEMPTING TO DEPLOY VIA ANSIBLE")
-      print ''
       print cmd
+
+      # while 1
+      #   sleep 1
+      # end
 
       Kernel.system cmd
 
@@ -115,7 +120,7 @@ module Mason
 
       exit_status = 666
       while exit_status != 0
-        # because ansible value may prompt
+        # because ansible-vault may prompt
 
         password ||= ansible_vault_password_from_environment
 
@@ -175,12 +180,22 @@ module Mason
        username = self[:sysadmin_username]
        playbook = self[:ansible_playbook]
 
-      [
+       vault_password = ansible_vault_password_from_environment
+
+       if vault_password.nil?
+        print "Note: Because there is no vault password available from the environment, this command will prompt for one. To avoid this, set the DERPLOYER_ANSIBLE_VAULT_PASSWORD environment variable."
+         print ""
+       end
+
+       [
         "ansible-playbook ", # Mason 2016-03-15: you can add -vvvvv here to debug ansible troubles.
          "--inventory-file=#{ inventory }",
          "--user='#{ username }'",
          "--private-key='#{ ssh_key }'",
-         "--ask-vault-pass",
+
+         #"--ask-vault-pass",
+         vault_password ? "--vault-password-file='#{write_temp_file(vault_password)}'" : "--ask-vault-pass",
+
          # "-vvvvv",
          extra_vars_str,
          playbook
