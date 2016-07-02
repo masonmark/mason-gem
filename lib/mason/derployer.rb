@@ -445,19 +445,48 @@ module Mason
 
       print ""
 
-      answer = ask "Enter an item number to change, [s] to save this set of values, or Return to continue: "
+      answer = ask "Enter an item number to change, [s] to save this set of values, [o] for\nother commands, or Return to continue: "
+      answer = answer.downcase
 
-      until answer == '' || answer.downcase == 's' || menu.keys.include?(answer)
+      until ['','s','o'].include?(answer) || menu.keys.include?(answer)
         print "Invalid answer (#{answer}), please try again."
         answer = ask ""
       end
 
       # either method below will call confirm_settings again when done:
 
-      if answer.downcase == 's'
+      if answer == 's'
         save_settings_with_name
+      elsif answer == 'o'
+        show_other_commands_menu
       elsif answer != ''
         change_setting menu[answer]
+      end
+    end
+
+
+    def show_other_commands_menu
+      # this should either exit (doing whatever other command) or go back to confirm_settings
+
+      menu = {'1' => "ssh into the booch (#{self[:target_host]}:#{self[:target_ssh_port]}) as #{self[:sysadmin_username]}"}
+
+      print_menu menu
+      print "Enter new value, or press ↩︎ to go back", terminator: nil
+
+      answer = nil
+
+      until answer == '' || menu.keys.include?(answer)
+        print "Invalid answer (#{answer}). Please try again:", terminator: nil
+        answer = ask ""
+        print ''
+      end
+
+      if answer == ''
+        confirm_settings
+      elsif answer == '1'
+        die "WHOOOT SSH SHOOT"
+      else
+        die "someone set up us the logicbomb"
       end
     end
 

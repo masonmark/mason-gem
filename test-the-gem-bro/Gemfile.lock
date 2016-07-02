@@ -1,7 +1,7 @@
 PATH
   remote: ../
   specs:
-    mason (0.0.4)
+    mason (0.0.6)
 
 GEM
   specs:
@@ -13,4 +13,4 @@ DEPENDENCIES
   mason!
 
 BUNDLED WITH
-   1.12.4
+   1.12.5
