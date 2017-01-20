@@ -153,7 +153,7 @@ class DerployerTests < Minitest::Test
 
     # use 'i' to input directly, but then just hit Return to accept current value:
     actual = d.edit_value :whut, user_inputs: ['i', '']
-    assert_equal nil, actual
+    assert_nil actual
 
     # do again but this time enter something
     actual = d.edit_value :whut, user_inputs: ['i', 'snausages', '']
